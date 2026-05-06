@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f6f3ec" />
+<meta name="color-scheme" content="light" />
+
+<title>정수정 · CRM Marketer Portfolio</title>
+<meta name="description" content="감으로 보내지 않습니다. 세그먼트, 맥락, 카피, 성과까지 — 한 줄의 메시지 뒤에 있는 모든 것을 함께 다루는 CRM 마케터 정수정의 포트폴리오." />
+<meta name="author" content="정수정 (Sujeong Jeong)" />
+<meta name="keywords" content="CRM, CRM 마케터, 포트폴리오, 카카오 알림톡, 세그먼트, 리텐션, 정수정" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:title" content="정수정 · CRM Marketer Portfolio" />
+<meta property="og:description" content="고객의 하루에 스며드는 메시지를 설계합니다. 5년차 CRM 마케터 포트폴리오." />
+<meta property="og:image" content="assets/portrait.png" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="정수정 · CRM Marketer Portfolio" />
+<meta name="twitter:description" content="고객의 하루에 스며드는 메시지를 설계합니다." />
+<meta name="twitter:image" content="assets/portrait.png" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23c0584a'/></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+  html, body { margin:0; padding:0; background:#f6f3ec; overflow-x:hidden; }
+  body { font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,sans-serif; color:#15110d; -webkit-font-smoothing:antialiased; }
+  *, *::before, *::after { box-sizing:border-box; }
+  #root { width:100%; min-height:100vh; }
+  /* full-bleed: PortfolioWarm sets its own width:100% / height:100%, but we need it to fit the viewport scroll, not its own scroll container */
+  #root > [data-pwarm] { height:auto !important; min-height:100vh; overflow-x:hidden !important; overflow-y:visible !important; }
+
+  /* clean ivory scrollbar — matches palette (bg #f6f3ec, line #e7e0d2, accent #c0584a) */
+  html { scrollbar-width: thin; scrollbar-color: #d8cfbf transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #d8cfbf;
+    border-radius: 999px;
+    border: 2px solid #f6f3ec; /* fakes a slimmer pill on the ivory bg */
+    background-clip: padding-box;
+    transition: background-color .2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #c0584a; background-clip: padding-box; }
+  ::-webkit-scrollbar-corner { background: transparent; }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="parts/portfolio-shared.jsx"></script>
+  <script type="text/babel" src="parts/portfolio-warm.jsx"></script>
+  <script type="text/babel">
+    const { PortfolioWarm } = window;
+    ReactDOM.createRoot(document.getElementById('root')).render(<PortfolioWarm palette="ivoryCoral" />);
+  </script>
+</body>
+</html>
