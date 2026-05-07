@@ -11,6 +11,30 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
   };
   const c = palettes[palette] || palettes.ivoryCoral;
 
+  // ── i18n: lang state synced with ?lang=en query param ──────────────────────
+  const [lang, setLang] = React.useState(() => {
+    if (typeof window === 'undefined') return 'ko';
+    const p = new URLSearchParams(window.location.search);
+    return p.get('lang') === 'en' ? 'en' : 'ko';
+  });
+  // Sync URL + <html lang> on every change. SEO/sharing benefit + back/forward support.
+  React.useEffect(() => {
+    document.documentElement.lang = lang;
+    const url = new URL(window.location);
+    if (lang === 'en') url.searchParams.set('lang', 'en');
+    else url.searchParams.delete('lang');
+    window.history.replaceState({}, '', url);
+  }, [lang]);
+  React.useEffect(() => {
+    const onPop = () => {
+      const p = new URLSearchParams(window.location.search);
+      setLang(p.get('lang') === 'en' ? 'en' : 'ko');
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+  const t = (obj, fallback = '') => (obj && obj[lang]) || (obj && obj.ko) || fallback;
+
   // detect artboard width once on mount (mobile breakpoint)
   const rootRef = React.useRef(null);
   const [isMobile, setIsMobile] = React.useState(false);
@@ -24,7 +48,11 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
     const root = rootRef.current; if (!root) return;
     const el = root.querySelector(`[data-anchor="${id}"]`);
     if (!el) return;
-    root.scrollTo({ top: el.offsetTop - (isMobile ? 56 : 64), behavior: 'smooth' });
+    // index.html forces `overflow-y: visible` on [data-pwarm] (line 40), so the
+    // real scroll context is window. Use absolute doc-position via getBoundingClientRect.
+    const navOffset = (isMobile ? 56 : 64) + 12;
+    const top = el.getBoundingClientRect().top + window.scrollY - navOffset;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   const [active, setActive] = React.useState('home');
@@ -63,6 +91,20 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
   const logoDot = { display: 'inline-block', width: 8, height: 8, borderRadius: 999, background: c.accent, marginRight: 10, verticalAlign: 'middle' };
   const navLinks = { display: isMobile ? 'none' : 'flex', gap: 28, fontSize: 13.5, color: c.mute };
   const navLink = (id) => ({ cursor: 'pointer', color: active === id ? c.ink : c.mute, fontWeight: active === id ? 600 : 500, transition: 'color .2s ease' });
+  // language toggle — pill segmented control, sits left of Contact CTA
+  const langPill = {
+    display: 'inline-flex', alignItems: 'center', padding: 3,
+    border: `1px solid ${c.line}`, borderRadius: 999, background: 'transparent',
+    fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em',
+  };
+  const langSeg = (active) => ({
+    padding: isMobile ? '4px 9px' : '5px 11px', fontSize: isMobile ? 10.5 : 11.5,
+    borderRadius: 999, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+    background: active ? c.ink : 'transparent',
+    color: active ? c.bg : c.mute,
+    fontWeight: active ? 700 : 500,
+    transition: 'background .25s ease, color .25s ease',
+  });
 
   // section heading — left title block, right lead aligned to baseline
   const secHead = isMobile
@@ -108,18 +150,42 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         }
       `}</style>
 
-      {/* nav — slim, 5 items */}
+      {/* nav — logo · section links · KO/EN toggle (Contact via floating Q&A or footer) */}
       <div style={navBar}>
         <div style={navInner}>
-          <div style={logo}><span style={logoDot}></span>{D.PERSON.nameKo}</div>
+          <div style={logo}>
+            <span style={logoDot}></span>
+            {lang === 'en' ? D.PERSON.nameEn : D.PERSON.nameKo}
+          </div>
           <div style={navLinks}>
             {[['home','Home'],['work','Work'],['about','About'],['career','Career'],['approach','Approach'],['contact','Contact']].map(([id,l]) => (
               <span key={id} style={navLink(id)} data-warm-link onClick={() => goTo(id)}>{l}</span>
             ))}
           </div>
-          <button style={cta} onClick={() => goTo('contact')}>연락하기 →</button>
+          <div style={langPill} role="group" aria-label={t(D.I18N.langToggleAria)}>
+            <button style={langSeg(lang === 'ko')} onClick={() => setLang('ko')} aria-pressed={lang === 'ko'}>KO</button>
+            <button style={langSeg(lang === 'en')} onClick={() => setLang('en')} aria-pressed={lang === 'en'}>EN</button>
+          </div>
         </div>
       </div>
+
+      {/* EN mode banner — body copy not yet localized; signals Profile Q&A is fully bilingual */}
+      {lang === 'en' && (
+        <div style={{
+          background: c.accentSoft, color: c.ink,
+          padding: isMobile ? '10px 16px' : '10px 24px',
+          fontSize: isMobile ? 12 : 13, lineHeight: 1.5, textAlign: 'center',
+          borderBottom: `1px solid ${c.line}`,
+          display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+        }}>
+          <span>{D.I18N.enBanner.en}</span>
+          <button onClick={() => setLang('ko')} style={{
+            background: 'transparent', border: `1px solid ${c.ink}`, color: c.ink,
+            padding: '4px 12px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+            fontFamily: 'inherit', fontWeight: 600,
+          }}>{D.I18N.enBannerCta.en}</button>
+        </div>
+      )}
 
       {/* hero — content-led; portrait as smaller editorial anchor */}
       <section data-anchor="home" data-screen-label="01 Hero" style={heroWrap}>
@@ -511,6 +577,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           }}>Resume ↓</a>
         </div>
       )}
+
+      {/* Interactive Profile Q&A — not a chatbot, a navigation aid */}
+      <AskSujeong c={c} isMobile={isMobile} lang={lang} t={t} qa={D.CHATBOT_QA} goTo={goTo} />
     </div>
   );
 };
@@ -969,6 +1038,519 @@ function PhoneScreenshot({ c, project, index, message }) {
           }}>오후 2:14</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AskSujeong — Interactive profile Q&A. Not a chatbot. A portfolio navigation aid.
+// Behavior: preset questions only (no free input), 3–5 line answers, optional
+// jump-to-section link that closes panel and scrolls to relevant content.
+function AskSujeong({ c, isMobile, lang, t, qa, goTo }) {
+  const [open, setOpen] = React.useState(false);
+  const [showBubble, setShowBubble] = React.useState(false);
+  const [conversation, setConversation] = React.useState([]); // [{role, text, jump?, qid}]
+  const [thinking, setThinking] = React.useState(false);
+  // Desktop only: dropdown popover for question list. Mobile uses horizontal chip rail.
+  const [listOpen, setListOpen] = React.useState(true);
+  const scrollerRef = React.useRef(null);
+  const panelRef = React.useRef(null);
+  const listAnchorRef = React.useRef(null);
+
+  // When the panel re-opens, expand the question list so it's immediately discoverable.
+  React.useEffect(() => { if (open) setListOpen(true); }, [open]);
+
+  // Click outside the trigger/popover closes the dropdown (desktop only).
+  React.useEffect(() => {
+    if (!listOpen || isMobile) return;
+    const onDocClick = (e) => {
+      if (listAnchorRef.current && !listAnchorRef.current.contains(e.target)) {
+        setListOpen(false);
+      }
+    };
+    const timer = setTimeout(() => document.addEventListener('click', onDocClick), 0);
+    return () => { clearTimeout(timer); document.removeEventListener('click', onDocClick); };
+  }, [listOpen, isMobile]);
+
+  // Bubble hint — appears 1.8s after mount, fades 8s later. Persists across lang switches.
+  React.useEffect(() => {
+    const t1 = setTimeout(() => setShowBubble(true), 1800);
+    const t2 = setTimeout(() => setShowBubble(false), 9800);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
+  // ESC closes panel
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  // Auto-scroll on conversation change
+  React.useEffect(() => {
+    const el = scrollerRef.current; if (!el) return;
+    requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
+  }, [conversation, thinking, open]);
+
+  // Lock body scroll when mobile panel is open (avoids dual scroll)
+  React.useEffect(() => {
+    if (!isMobile || !open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [isMobile, open]);
+
+  // Reset conversation when language switches (questions+answers swap)
+  React.useEffect(() => { setConversation([]); }, [lang]);
+
+  const handleQuestion = (item) => {
+    if (thinking) return;
+    const stamp = Date.now();
+    setConversation(prev => [...prev, { role: 'user', text: t(item.q), qid: item.id, key: `${item.id}-u-${stamp}` }]);
+    setThinking(true);
+    setTimeout(() => {
+      setConversation(prev => [...prev, {
+        role: 'bot', text: t(item.a), jump: item.jump, qid: item.id, key: `${item.id}-b-${stamp}`,
+      }]);
+      setThinking(false);
+    }, 720);
+  };
+
+  const handleJump = (id) => {
+    // Mobile: panel covers ~85vh, so close it before scrolling — otherwise the
+    // user can't see the destination. Desktop: panel sits in corner, keep it open
+    // so the user can read the answer while the page scrolls behind it.
+    if (isMobile) {
+      setOpen(false);
+      setTimeout(() => goTo(id), 280);
+    } else {
+      goTo(id);
+    }
+  };
+
+  const toggleOpen = () => {
+    setOpen(o => !o);
+    setShowBubble(false);
+  };
+
+  const askedIds = new Set(conversation.filter(m => m.role === 'user').map(m => m.qid));
+
+  // Position offsets — float button must clear mobile sticky CTA (≈64px)
+  const fabBottom = isMobile ? 88 : 26;
+  const fabRight = isMobile ? 16 : 26;
+  const fabSize = isMobile ? 52 : 56;
+
+  // ── Floating button ──
+  // Pale-cream coral (lighter than accentSoft) — matches hero portrait halo
+  // tone but reads as "soft cream" rather than coral, so the photo dominates.
+  const fabBg = '#faeade'; // accentSoft mixed ~40% toward bg
+  const fabStyle = {
+    position: 'fixed', right: fabRight, bottom: fabBottom, zIndex: 60,
+    width: fabSize, height: fabSize, borderRadius: '50%',
+    background: fabBg, border: `1px solid ${c.accent}22`,
+    padding: 0, cursor: 'pointer', overflow: 'hidden',
+    boxShadow: '0 12px 28px -10px rgba(192,88,74,0.18), 0 2px 6px -2px rgba(20,15,10,0.08)',
+    transition: 'transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease',
+    transform: open ? 'scale(0.92)' : 'scale(1)',
+    display: 'block',
+  };
+
+  // Bubble hint — sits to the LEFT of the FAB
+  const bubbleStyle = {
+    position: 'fixed',
+    right: fabRight + fabSize + 12, bottom: fabBottom + fabSize / 2 - 18,
+    zIndex: 59,
+    background: c.paper, color: c.ink,
+    padding: '9px 14px', borderRadius: 18,
+    border: `1px solid ${c.line}`,
+    fontSize: 12.5, fontWeight: 500, whiteSpace: 'nowrap',
+    boxShadow: '0 10px 24px -14px rgba(20,15,10,0.18)',
+    opacity: showBubble && !open ? 1 : 0,
+    transform: showBubble && !open ? 'translateY(0)' : 'translateY(6px)',
+    transition: 'opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1)',
+    pointerEvents: 'none',
+    fontFamily: 'inherit',
+  };
+
+  // ── Panel ──
+  const panelStyle = isMobile ? {
+    position: 'fixed', left: 0, right: 0, bottom: 0,
+    height: '85vh', maxHeight: '85vh',
+    background: c.bg, borderTop: `1px solid ${c.line}`,
+    borderTopLeftRadius: 18, borderTopRightRadius: 18,
+    zIndex: 70, display: 'flex', flexDirection: 'column',
+    transform: open ? 'translateY(0)' : 'translateY(100%)',
+    transition: 'transform .42s cubic-bezier(.2,.7,.2,1)',
+    boxShadow: '0 -20px 60px -20px rgba(20,15,10,0.25)',
+    paddingBottom: 'env(safe-area-inset-bottom)',
+  } : {
+    position: 'fixed', right: 24, bottom: 96,
+    width: 384, height: 'min(548px, calc(100vh - 140px))',
+    background: c.bg, border: `1px solid ${c.line}`, borderRadius: 14,
+    zIndex: 70, display: 'flex', flexDirection: 'column',
+    overflow: 'hidden',
+    transformOrigin: 'bottom right',
+    transform: open ? 'scale(1) translateY(0)' : 'scale(0.96) translateY(8px)',
+    opacity: open ? 1 : 0,
+    pointerEvents: open ? 'auto' : 'none',
+    transition: 'opacity .25s ease, transform .3s cubic-bezier(.2,.7,.2,1)',
+    boxShadow: '0 24px 60px -24px rgba(20,15,10,0.32), 0 4px 12px -4px rgba(20,15,10,0.08)',
+  };
+
+  return (
+    <>
+      <style>{`
+        @keyframes asTypingBlink {
+          0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+          30% { opacity: 1; transform: translateY(-2px); }
+        }
+        @keyframes asMsgIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        [data-as-fab]:hover { transform: scale(1.05) translateY(-2px) !important; box-shadow: 0 16px 36px -10px rgba(20,15,10,0.28), 0 4px 10px -2px rgba(20,15,10,0.12) !important; }
+        [data-as-chip]:hover:not([data-disabled="true"]) { border-color: ${c.ink} !important; background: ${c.paper} !important; }
+        [data-as-listrow]:hover:not([disabled]) { background: ${c.bgTint} !important; }
+        [data-as-listrow]:hover:not([disabled]) span:last-child { opacity: 1 !important; }
+        [data-as-jump]:hover { color: ${c.ink} !important; }
+        [data-as-msg-bot] { animation: asMsgIn .42s cubic-bezier(.2,.7,.2,1) both; }
+        [data-as-msg-user] { animation: asMsgIn .3s ease both; }
+        [data-as-scroller]::-webkit-scrollbar { width: 6px; }
+        [data-as-scroller]::-webkit-scrollbar-thumb { background: ${c.line}; border-radius: 999px; }
+        [data-as-chiprail] { scrollbar-width: none; }
+        [data-as-chiprail]::-webkit-scrollbar { display: none; }
+      `}</style>
+
+      {/* Speech bubble hint — only when closed and within the show window */}
+      <div style={bubbleStyle} aria-hidden="true">
+        {t(qa.ui.bubble)}
+        <span style={{
+          position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%) rotate(45deg)',
+          width: 10, height: 10, background: c.paper,
+          borderRight: `1px solid ${c.line}`, borderTop: `1px solid ${c.line}`,
+        }}></span>
+      </div>
+
+      {/* Floating button — face crop + small online dot */}
+      <button
+        data-as-fab
+        onClick={toggleOpen}
+        aria-label={open ? t(qa.ui.closeAria) : t(qa.ui.panelTitle)}
+        aria-expanded={open}
+        style={fabStyle}
+      >
+        <div style={{
+          width: '100%', height: '100%',
+          backgroundImage: 'url(assets/portrait.png)',
+          // Zoom + low Y% shows more of the top of the image (hair/forehead),
+          // which visually pushes the face down into the lower half of the circle.
+          backgroundSize: '165% auto',
+          backgroundPosition: '50% 10%',
+          backgroundRepeat: 'no-repeat',
+          filter: 'saturate(0.85) contrast(1.05)',
+        }} />
+        {/* online dot */}
+        <span aria-hidden="true" style={{
+          position: 'absolute', right: 4, bottom: 4,
+          width: 12, height: 12, borderRadius: '50%',
+          background: c.accent, border: `2px solid ${fabBg}`,
+        }}></span>
+      </button>
+
+      {/* Mobile backdrop */}
+      {isMobile && (
+        <div
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+          style={{
+            position: 'fixed', inset: 0, zIndex: 65,
+            background: 'rgba(20,15,10,0.42)',
+            opacity: open ? 1 : 0,
+            pointerEvents: open ? 'auto' : 'none',
+            transition: 'opacity .3s ease',
+            backdropFilter: 'blur(2px)',
+            WebkitBackdropFilter: 'blur(2px)',
+          }}
+        />
+      )}
+
+      {/* Panel */}
+      <div ref={panelRef} role="dialog" aria-modal="true" aria-label={t(qa.ui.panelTitle)} style={panelStyle}>
+        {/* Mobile drag handle */}
+        {isMobile && (
+          <div aria-hidden="true" style={{
+            display: 'flex', justifyContent: 'center', paddingTop: 8,
+          }}>
+            <div style={{ width: 36, height: 4, borderRadius: 999, background: c.line }}></div>
+          </div>
+        )}
+
+        {/* Header */}
+        <header style={{
+          display: 'flex', alignItems: 'center', gap: 12,
+          padding: isMobile ? '14px 18px 14px' : '16px 18px',
+          borderBottom: `1px solid ${c.line}`,
+          background: c.paper,
+        }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+            backgroundColor: '#faeade',
+            backgroundImage: 'url(assets/portrait.png)',
+            backgroundSize: '165% auto',
+            backgroundPosition: '50% 22%',
+            backgroundRepeat: 'no-repeat',
+            border: `1px solid ${c.accent}22`,
+            filter: 'saturate(0.85)',
+          }} />
+          <div style={{flex: 1, minWidth: 0}}>
+            <div style={{fontSize: 14, fontWeight: 700, color: c.ink, letterSpacing: '-0.01em', lineHeight: 1.25}}>
+              {t(qa.ui.panelTitle)}
+            </div>
+            <div style={{fontSize: 11.5, color: c.faint, marginTop: 2, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em'}}>
+              {t(qa.ui.panelSubtitle)}
+            </div>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            aria-label={t(qa.ui.closeAria)}
+            style={{
+              width: 32, height: 32, borderRadius: 999,
+              background: 'transparent', border: 'none', cursor: 'pointer',
+              color: c.mute, fontSize: 18, lineHeight: 1,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: 'inherit',
+            }}
+          >×</button>
+        </header>
+
+        {/* Messages */}
+        <div
+          ref={scrollerRef}
+          data-as-scroller
+          style={{
+            flex: 1, overflowY: 'auto', padding: '18px 18px 8px',
+            display: 'flex', flexDirection: 'column', gap: 14,
+            background: c.bg,
+          }}
+        >
+          {/* Greeting */}
+          <BotBubble c={c} text={t(qa.ui.greeting)} />
+
+          {conversation.map((m) => (
+            m.role === 'user' ? (
+              <UserBubble key={m.key} c={c} text={m.text} />
+            ) : (
+              <BotBubble key={m.key} c={c} text={m.text} jump={m.jump} lang={lang} onJump={handleJump} />
+            )
+          ))}
+
+          {thinking && <TypingDots c={c} />}
+        </div>
+
+        {/* Question footer — desktop: dropdown popover, mobile: horizontal chip rail */}
+        <footer style={{
+          borderTop: `1px solid ${c.line}`,
+          background: c.paper,
+          padding: '12px 14px 14px',
+        }}>
+          {isMobile ? (
+            <>
+              <div style={{
+                fontSize: 10.5, fontWeight: 700, color: c.faint,
+                letterSpacing: '0.08em', textTransform: 'uppercase',
+                fontFamily: "'IBM Plex Mono', monospace",
+                marginBottom: 9, paddingLeft: 2,
+              }}>
+                {conversation.length > 0 ? t(qa.ui.askAnother) : (lang === 'en' ? 'Pick a question' : '질문 골라보기')}
+              </div>
+              <div data-as-chiprail style={{
+                display: 'flex', gap: 7,
+                flexWrap: 'nowrap', overflowX: 'auto',
+                paddingBottom: 4,
+                scrollSnapType: 'x proximity',
+              }}>
+                {qa.items.map((item) => {
+                  const asked = askedIds.has(item.id);
+                  return (
+                    <button
+                      key={item.id}
+                      data-as-chip
+                      data-disabled={asked || thinking ? 'true' : 'false'}
+                      disabled={thinking}
+                      onClick={() => handleQuestion(item)}
+                      style={{
+                        flexShrink: 0,
+                        padding: '8px 13px', fontSize: 12.5,
+                        background: asked ? c.bgTint : c.bg,
+                        color: asked ? c.faint : c.ink,
+                        border: `1px solid ${c.line}`,
+                        borderRadius: 999, cursor: thinking ? 'default' : 'pointer',
+                        fontFamily: 'inherit', fontWeight: 500,
+                        whiteSpace: 'nowrap',
+                        transition: 'background .2s ease, border-color .2s ease, color .2s ease',
+                        scrollSnapAlign: 'start',
+                        opacity: thinking ? 0.6 : 1,
+                      }}
+                    >
+                      {asked ? '✓ ' : ''}{t(item.q)}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <div ref={listAnchorRef} style={{position: 'relative'}}>
+              {/* Popover list — appears above the trigger button */}
+              <div
+                aria-hidden={!listOpen}
+                style={{
+                  position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, right: 0,
+                  background: c.paper, border: `1px solid ${c.line}`, borderRadius: 12,
+                  boxShadow: '0 -16px 36px -14px rgba(20,15,10,0.20), 0 -2px 8px -4px rgba(20,15,10,0.06)',
+                  padding: 6,
+                  maxHeight: 280, overflowY: 'auto',
+                  zIndex: 2,
+                  opacity: listOpen ? 1 : 0,
+                  transform: listOpen ? 'translateY(0)' : 'translateY(6px)',
+                  pointerEvents: listOpen ? 'auto' : 'none',
+                  transition: 'opacity .2s ease, transform .25s cubic-bezier(.2,.7,.2,1)',
+                }}
+              >
+                {qa.items.map((item) => {
+                  const asked = askedIds.has(item.id);
+                  return (
+                    <button
+                      key={item.id}
+                      data-as-listrow
+                      data-asked={asked ? 'true' : 'false'}
+                      disabled={thinking}
+                      onClick={() => { handleQuestion(item); setListOpen(false); }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        width: '100%', textAlign: 'left',
+                        padding: '10px 12px',
+                        background: 'transparent', border: 'none', borderRadius: 8,
+                        cursor: thinking ? 'default' : 'pointer',
+                        fontSize: 13, fontFamily: 'inherit', fontWeight: 500,
+                        color: asked ? c.faint : c.ink,
+                        transition: 'background .15s ease, color .15s ease',
+                      }}
+                    >
+                      <span style={{
+                        flex: 0, width: 14, fontSize: 11, color: asked ? c.accent : c.faint,
+                      }}>{asked ? '✓' : ''}</span>
+                      <span style={{flex: 1, lineHeight: 1.4}}>{t(item.q)}</span>
+                      <span style={{flex: 0, color: c.accent, fontSize: 12, opacity: 0.5}}>→</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Trigger button */}
+              <button
+                onClick={(e) => { e.stopPropagation(); setListOpen(o => !o); }}
+                aria-expanded={listOpen}
+                style={{
+                  width: '100%',
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+                  padding: '10px 14px',
+                  background: c.bg, border: `1px solid ${c.line}`, borderRadius: 999,
+                  fontSize: 13, color: c.ink, fontFamily: 'inherit',
+                  cursor: 'pointer', fontWeight: 500,
+                  transition: 'border-color .2s ease, background .2s ease',
+                }}
+              >
+                <span style={{display: 'flex', alignItems: 'center', gap: 8}}>
+                  <span style={{
+                    fontSize: 10.5, fontWeight: 700, color: c.faint,
+                    letterSpacing: '0.08em', textTransform: 'uppercase',
+                    fontFamily: "'IBM Plex Mono', monospace",
+                  }}>{askedIds.size}/{qa.items.length}</span>
+                  <span>{conversation.length > 0 ? t(qa.ui.askAnother) : (lang === 'en' ? 'Pick a question' : '질문 골라보기')}</span>
+                </span>
+                <span style={{
+                  color: c.faint, fontSize: 11,
+                  transform: listOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform .2s ease', display: 'inline-block',
+                }}>▾</span>
+              </button>
+            </div>
+          )}
+        </footer>
+      </div>
+    </>
+  );
+}
+
+// Bot/User message bubbles — paragraph-aware (split on \n\n), optional jump link.
+function BotBubble({ c, text, jump, lang, onJump }) {
+  const paragraphs = String(text).split('\n\n');
+  return (
+    <div data-as-msg-bot style={{
+      alignSelf: 'flex-start', maxWidth: '88%',
+      background: c.paper, border: `1px solid ${c.line}`,
+      borderRadius: '4px 14px 14px 14px',
+      padding: '11px 14px',
+      fontSize: 13.5, lineHeight: 1.65, color: c.ink,
+      wordBreak: 'keep-all', overflowWrap: 'break-word',
+    }}>
+      {paragraphs.map((p, i) => (
+        <p key={i} style={{margin: i === 0 ? 0 : '8px 0 0'}}>{p}</p>
+      ))}
+      {jump && (
+        <button
+          data-as-jump
+          onClick={() => onJump(jump.id)}
+          style={{
+            marginTop: 12, padding: '6px 11px',
+            background: 'transparent', color: c.accent,
+            border: `1px solid ${c.accentSoft}`, borderRadius: 999,
+            fontSize: 12, fontWeight: 600, cursor: 'pointer',
+            fontFamily: 'inherit',
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            transition: 'color .2s ease, border-color .2s ease',
+          }}
+        >
+          → {jump.label[lang] || jump.label.ko}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function UserBubble({ c, text }) {
+  return (
+    <div data-as-msg-user style={{
+      alignSelf: 'flex-end', maxWidth: '85%',
+      background: c.ink, color: c.bg,
+      borderRadius: '14px 4px 14px 14px',
+      padding: '10px 14px',
+      fontSize: 13, lineHeight: 1.55,
+      wordBreak: 'keep-all', overflowWrap: 'break-word',
+      fontWeight: 500,
+    }}>
+      {text}
+    </div>
+  );
+}
+
+function TypingDots({ c }) {
+  return (
+    <div data-as-msg-bot style={{
+      alignSelf: 'flex-start',
+      background: c.paper, border: `1px solid ${c.line}`,
+      borderRadius: '4px 14px 14px 14px',
+      padding: '12px 16px',
+      display: 'inline-flex', gap: 4, alignItems: 'center',
+    }}>
+      {[0, 1, 2].map(i => (
+        <span key={i} style={{
+          width: 6, height: 6, borderRadius: '50%', background: c.faint,
+          display: 'inline-block',
+          animation: `asTypingBlink 1.2s ${i * 0.18}s infinite ease-in-out`,
+        }}></span>
+      ))}
     </div>
   );
 }

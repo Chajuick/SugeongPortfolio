@@ -229,6 +229,94 @@ const VALUES = [
   { n: '04', t: '한 번의 캠페인을 다음의 출발선으로.', d: '실행 → 기록 → 분석 → 개선의 루틴을 사람의 의지가 아닌 산출물로 강제합니다. 모든 캠페인은 라이브러리에 한 줄을 남기고 끝납니다.' },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+// i18n strings (Phase 1: nav-level + banner only; body copy will be localized in next session)
+const I18N = {
+  contactCta:    { ko: '연락하기 →', en: 'Contact →' },
+  langToggleAria:{ ko: '언어 변경', en: 'Switch language' },
+  enBanner:      { en: 'English version is in preparation — body copy is still in Korean for now. The Profile Q&A on the right is fully bilingual.' },
+  enBannerCta:   { en: 'Switch back to Korean' },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Profile Q&A — interactive self-introduction (not a chatbot)
+// 7 questions covering personality, work, method, collab, intent, contact.
+// Answers are 3–5 lines max. Optional `jump` link routes to a portfolio section.
+const CHATBOT_QA = {
+  ui: {
+    panelTitle:    { ko: '정수정에게 묻기',         en: 'Ask Sujeong' },
+    panelSubtitle: { ko: 'CRM Marketer · 5 years',  en: 'CRM Marketer · 5 years' },
+    bubble:        { ko: '궁금한 점이 있나요?',      en: 'Curious about my work?' },
+    greeting:      { ko: '안녕하세요. 아래 질문 중 궁금한 걸 골라보세요.', en: 'Hi — pick a question below and I’ll answer.' },
+    closeAria:     { ko: '닫기',                    en: 'Close' },
+    askAnother:    { ko: '다른 질문도 골라보세요',   en: 'Pick another question' },
+  },
+  items: [
+    {
+      id: 'q1',
+      q: { ko: '어떤 CRM 마케터인가요?', en: 'What kind of CRM marketer are you?' },
+      a: {
+        ko: '5년차 CRM 마케터입니다. 알림톡·이메일·푸시 채널로 142+ 캠페인을 보내왔어요.\n\nCRM을 ‘발송 업무’가 아니라 ‘고객 경험 설계’라고 믿습니다. 같은 메시지도 누구에게, 언제, 어떤 문장으로 도착하느냐에 따라 의미가 완전히 달라지니까요.',
+        en: 'I’m a CRM marketer with 5 years of experience — 142+ campaigns shipped across KakaoTalk, email, and push.\n\nI treat CRM as customer-experience design, not message dispatch. The same coupon means something different depending on who receives it, when, and in what voice.',
+      },
+      jump: { id: 'about', label: { ko: 'About 섹션에서 더 보기', en: 'See full About' } },
+    },
+    {
+      id: 'q2',
+      q: { ko: '가장 자신 있는 프로젝트는?', en: 'What project best represents your work?' },
+      a: {
+        ko: 'VIP 12,400명을 대상으로 9개월 동안 운영한 1:1 큐레이션 프로그램입니다.\n\n‘팔지 않는 메시지’가 가장 잘 팔린다는 걸 배운 작업이었어요. 12개월 잔존 +22%, 회신율 6.4% (업계 평균 1~2%). VIP에게 필요한 건 혜택 알림이 아니라 취향을 정리해주는 사람이었습니다.',
+        en: 'A 9-month VIP program for 12,400 high-tier customers — quarterly 1:1 curation messages.\n\nI learned that messages that don’t sell sell the best. 12-month retention +22%, reply rate 6.4% (industry CRM avg: 1–2%). VIPs didn’t need promo alerts — they needed someone to organize their taste.',
+      },
+      jump: { id: 'work', label: { ko: 'Featured Work에서 보기', en: 'See Featured Work' } },
+    },
+    {
+      id: 'q3',
+      q: { ko: '세그먼트는 어떻게 설계하나요?', en: 'How do you approach segmentation?' },
+      a: {
+        ko: 'RFM만으로는 부족하다고 봐요. 행동 이벤트 × 라이프사이클 단계 × LTV 구간을 SQL로 조합합니다.\n\n세그먼트는 ‘리스트’가 아니라 ‘가설’이라고 생각해요. 그래서 모든 세그먼트는 control 그룹과 종료 규칙을 함께 정의합니다.',
+        en: 'RFM alone isn’t enough. I write SQL segments around behavioral events × lifecycle stage × LTV tier.\n\nA segment is a hypothesis, not a list. So every segment ships with a control group and an exit rule baked in.',
+      },
+      jump: { id: 'approach', label: { ko: 'Approach에서 자세히', en: 'See method in Approach' } },
+    },
+    {
+      id: 'q4',
+      q: { ko: '캠페인 성과는 어떻게 판단하나요?', en: 'How do you measure campaign success?' },
+      a: {
+        ko: '24h / 7d 두 시점에서 Open · CTR · CVR · Unsub을 봅니다. 그리고 항상 control과 함께 봐요.\n\n맥락 없는 숫자는 소음이라고 생각해요. 결과는 항상 Win Pattern Library에 정리해서 다음 캠페인의 입력값으로 만듭니다.',
+        en: 'I read every campaign at 24h and 7d — Open · CTR · CVR · Unsubscribe — always against a control group.\n\nNumbers without context are noise. Results land in a Win Pattern Library that becomes the input for the next campaign.',
+      },
+      jump: { id: 'approach', label: { ko: 'Approach에서 자세히', en: 'See more in Approach' } },
+    },
+    {
+      id: 'q5',
+      q: { ko: '협업할 때 어떤 스타일인가요?', en: 'What is your collaboration style?' },
+      a: {
+        ko: '카피를 쓰기 전에 1-pager(문제·세그먼트·가설·KPI)를 먼저 공유합니다.\n\n메시지 한 줄 뒤에는 디자인, 개발, CS, 영업이 다 따라오니까요. 컨펌 라운드를 줄이는 가장 빠른 길은 카피가 아니라 ‘맥락을 먼저 정렬하는 것’이라고 믿어요.',
+        en: 'I share a 1-pager (problem · segment · hypothesis · KPI) before any copy is written.\n\nDesign, dev, CS, and sales all need to align before a single message ships. Front-loading context is the fastest way to cut down confirmation rounds.',
+      },
+    },
+    {
+      id: 'q6',
+      q: { ko: '지금 어떤 기회를 찾고 있나요?', en: 'What opportunities are you looking for?' },
+      a: {
+        ko: 'CRM을 ‘한 번 보내는 일’이 아니라 ‘시스템’으로 운영하는 팀을 찾고 있어요.\n\n시퀀스를 설계할 라이프사이클 단계가 있고, 세그먼트를 쿼리할 데이터가 있고, 결과를 실험으로 닫는 분위기가 있는 곳이면 좋겠습니다. 작은 팀의 첫 CRM이든, 큰 조직의 새 채널 셋업이든 환영합니다.',
+        en: 'Teams running CRM as a system, not as one-off sends.\n\nA lifecycle worth designing for, queryable data, and a culture that closes results with experiments. Whether it’s a small team’s first CRM build or a larger org’s new channel — I’m in.',
+      },
+      jump: { id: 'contact', label: { ko: 'Contact로 이동', en: 'Jump to Contact' } },
+    },
+    {
+      id: 'q7',
+      q: { ko: '연락하려면 어떻게 하나요?', en: 'How can I contact you?' },
+      a: {
+        ko: '이메일이 가장 빠릅니다 → sujeong.jeong@example.com\n\n24시간 내 회신 드려요. LinkedIn / Brunch / Notion Resume도 페이지 하단 Contact 섹션에 있습니다.',
+        en: 'Email is fastest → sujeong.jeong@example.com\n\nReply within 24h. LinkedIn / Brunch / Notion Resume are all in the Contact section at the bottom of the page.',
+      },
+      jump: { id: 'contact', label: { ko: 'Contact로 이동', en: 'Jump to Contact' } },
+    },
+  ],
+};
+
 // ---------- small reusable hooks/components ----------
 
 function useInView(threshold = 0.2) {
@@ -304,7 +392,7 @@ function PhotoSlot({ ratio = '4 / 5', label = 'Portrait — 인물 사진', radi
   );
 }
 
-window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER };
+window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER, I18N, CHATBOT_QA };
 window.useInView = useInView;
 window.CountUp = CountUp;
 window.Reveal = Reveal;
