@@ -323,7 +323,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               <div style={secNum}>02 — Featured Work</div>
               <h2 style={secTitle}>메시지를 보내기 전과 후를 함께 봅니다.</h2>
             </div>
-            <p style={secLead}>각 케이스는 문제, 접근, 실행, 결과, 학습이 보이도록 구성했습니다. 실제 수치와 스크린샷은 확인 후 교체합니다.</p>
+            <p style={secLead}>메시지 방향, 발송 운영, 성과 추적, 레퍼런스 정리까지 CRM 캠페인의 흐름이 보이도록 구성했습니다.</p>
           </div>
         </div>
 
@@ -392,7 +392,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             <div style={secNum}>04 — Career</div>
               <h2 style={secTitle}>CRM 운영과 콘텐츠 경험이<br/>같은 방향으로 쌓였습니다.</h2>
             </div>
-          <p style={secLead}>실제 경력과 확인된 경험 중심으로 정리했습니다. 내부 정보와 미확인 수치는 노출하지 않습니다.</p>
+          <p style={secLead}>CRM 운영 경험과 콘텐츠 마케팅 경험을 고객 반응을 읽는 역량으로 연결해 정리했습니다.</p>
         </div>
         <div>
           {D.CAREER.map((job, i) => (
@@ -470,7 +470,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             }}>
               <div style={{...secNum, fontSize: 13}}>Education · Certification</div>
               <div style={{fontSize: 12.5, color: c.faint, lineHeight: 1.6}}>
-                자격증은 실제 보유 여부와 연도 확인 후 추가합니다.
+                실무 도구 이해를 보완한 교육 이력입니다.
               </div>
             </div>
             <div style={{
@@ -1015,8 +1015,6 @@ function CaseCard({ c, project, index, isMobile }) {
 }
 
 // Phone-frame screenshot — neutral, no per-card hue.
-// TODO: Replace this illustrated placeholder with anonymized screenshots under
-// /assets/portfolio once the final proof images are prepared.
 function PhoneScreenshot({ c, project, index, message }) {
   const channel = project.channels[0] || 'Kakao 알림톡';
   const titles = ['Water Purifier CRM', 'Big Smile Day Push', 'Performance Tracking', 'CRM Monitoring Board'];

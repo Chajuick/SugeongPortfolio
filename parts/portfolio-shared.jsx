@@ -172,9 +172,7 @@ const PROJECTS = [
         label: '동일 모수 대비 매출 증가',
         caption: '여성 35~59세 타겟 전환 후',
       },
-      before: { copy: '남성 중심 타겟 · 푸른색 배너 톤', primary: '1.0x', secondary: '기존 매출' },
-      after: { copy: '여성 35~59세 타겟 · 부드러운 배너 톤', primary: '2.0x', secondary: '동일 모수 매출' },
-      note: '이후 분홍 테마 홍보로 확장되었습니다.',
+      note: '타겟 전환 이후 분홍 테마 홍보로 확장되었습니다.',
     },
     channels: ['KakaoTalk Plus Friend', 'Brand Message', 'Target Proposal'],
     baseline: '브랜드별 메시지 방향 제안',
@@ -207,11 +205,7 @@ const PROJECTS = [
         label: '단일 앱푸시 발송 규모',
         caption: '빅스마일데이 발송 세팅 · QA · 리포트 확인',
       },
-      beforeLabel: 'Before',
-      afterLabel: 'Big Smile Day',
-      before: { copy: '일반 프로모션 캠페인 기준', primary: '[기준 GMV]', secondary: '[기준 구매자]' },
-      after: { copy: '빅스마일데이 대형 행사 발송 기준', primary: '[행사 GMV]', secondary: '[행사 구매자]' },
-      note: '매출 규모는 공개 가능한 범위로 익명화해 입력합니다.',
+      note: '대형 행사 발송 전후의 운영 품질과 성과 리포트를 함께 관리했습니다.',
     },
     channels: ['App Push', 'Big Promotion', 'QA Checklist'],
     baseline: '대규모 발송 운영 안정성',
@@ -244,10 +238,6 @@ const PROJECTS = [
         label: '대표 캠페인 CTR 차이',
         caption: 'Audience 대비 Scenario 클릭 반응',
       },
-      beforeLabel: 'Audience',
-      afterLabel: 'Scenario',
-      before: { copy: 'Audience 캠페인 기준 CTR', primary: '1.0x', secondary: 'CTR 기준' },
-      after: { copy: 'Scenario 캠페인 CTR', primary: '2.7x', secondary: 'Audience 대비' },
       note: '대표 사례로 Scenario 캠페인의 CTR이 Audience 대비 2.7배 높았습니다.',
     },
     channels: ['Performance Report', 'Message Structure', 'Insight'],
@@ -281,11 +271,7 @@ const PROJECTS = [
         label: '브랜드 CRM 메시지 비교',
         caption: '혜택 표현 · CTA · 톤앤매너 패턴 정리',
       },
-      beforeLabel: 'Before',
-      afterLabel: 'After',
-      before: { copy: '브랜드별 메시지를 개별 캡처로만 확인', primary: '수집', secondary: '개별 메시지' },
-      after: { copy: '혜택 표현, CTA, 톤을 비교 가능한 보드로 정리', primary: '정리', secondary: '패턴/가설' },
-      note: '개인 수신 정보와 쿠폰번호는 블러 처리합니다.',
+      note: '다양한 브랜드의 메시지 패턴을 다음 캠페인 가설로 연결했습니다.',
     },
     channels: ['Benchmarking', 'KakaoTalk', 'App Push'],
     baseline: '브랜드별 CRM 패턴 비교',
@@ -539,7 +525,7 @@ function Reveal({ children, delay = 0, y = 14, as: Tag = 'div', style, ...rest }
   );
 }
 
-// Photo placeholder — striped, with mono explainer text.
+// Reusable visual slot.
 function PhotoSlot({ ratio = '4 / 5', label = 'Portrait — 인물 사진', radius = 16, accent = '#c9a87a', bg = '#f3ead8' }) {
   return (
     <div style={{
