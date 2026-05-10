@@ -911,7 +911,7 @@ function Reveal({ children, delay = 0, y = 14, as: Tag = 'div', style, ...rest }
       style={{
         ...style,
         transform: seen ? 'translateY(0)' : `translateY(${y}px)`,
-        opacity: 1,
+        opacity: seen ? 1 : 0,
         transition: `transform 700ms cubic-bezier(.2,.7,.2,1) ${delay}ms, opacity 700ms ease ${delay}ms`,
         willChange: 'transform, opacity',
       }}

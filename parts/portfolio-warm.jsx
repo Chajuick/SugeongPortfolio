@@ -2,7 +2,7 @@
 
 const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
   const D = window.PORTFOLIO_DATA;
-  const { Reveal, CountUp, PhotoSlot } = window;
+  const { Reveal, CountUp, PhotoSlot, useInView } = window;
 
   const palettes = {
     ivoryCoral:  { bg:'#f6f3ec', bgTint:'#f1ede3', paper:'#ffffff', ink:'#15110d', mute:'#6b6259', faint:'#a59c92', line:'#e7e0d2', accent:'#c0584a', accentSoft:'#f3dccf' },
@@ -134,6 +134,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
   const guardPlaceholderLink = (e) => {
     if (!isEmailReady) e.preventDefault();
   };
+
+  // hero stats grid — single observer drives all 4 count-ups in sync
+  const [statsRef, statsSeen] = useInView(0.3);
 
   return (
     <div ref={rootRef} data-scroll-root data-pwarm style={root}>
@@ -273,7 +276,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div style={{fontSize: 12, fontWeight: 700, color: c.faint, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 14, fontFamily: "'IBM Plex Mono', monospace"}}>
             {lang === 'en' ? 'Selected metrics' : 'Selected metrics · 대표 성과'}
           </div>
-          <div style={{
+          <div ref={statsRef} style={{
             display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
             borderTop: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`,
           }}>
@@ -286,9 +289,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               }}>
                 <div style={{display: 'flex', alignItems: 'baseline', gap: 8, minHeight: isMobile ? 42 : 44}}>
                   <span style={{fontSize: isMobile ? 34 : 36, fontWeight: 700, letterSpacing: '-0.035em', lineHeight: 1.08, color: c.ink}}>
-                    {typeof s.v === 'number'
-                      ? <CountUp to={s.v} suffix={s.suffix || ''} />
-                      : s.text}
+                    <CountValue value={s.text} active={statsSeen} duration={1400} />
                   </span>
                   {s.unit && (
                     <span style={{fontSize: 11.5, fontWeight: 700, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.06em', textTransform: 'uppercase'}}>
@@ -794,14 +795,17 @@ function CaseStrip({ c, isMobile, wrap, projects, lang }) {
   );
 }
 
-// Numeric metric parser — handles signed percentages, multipliers, and plain labels.
+// Numeric metric parser — handles signed percentages, multipliers, plain labels,
+// and comma-grouped integers (e.g. "1,000+").
 function _parseMetric(s) {
   const str = String(s);
-  const m = str.match(/^([+\-−])?\s*(\d+(?:\.\d+)?)(.*)$/);
-  if (!m) return { num: 0, sign: '', rest: str, dec: 0, raw: str };
+  const cleaned = str.replace(/,/g, '');
+  const hasComma = str !== cleaned;
+  const m = cleaned.match(/^([+\-−])?\s*(\d+(?:\.\d+)?)(.*)$/);
+  if (!m) return { num: 0, sign: '', rest: str, dec: 0, raw: str, hasComma: false };
   const numStr = m[2];
   const dec = numStr.includes('.') ? numStr.split('.')[1].length : 0;
-  return { num: parseFloat(numStr), sign: m[1] || '', rest: m[3] || '', dec, raw: null };
+  return { num: parseFloat(numStr), sign: m[1] || '', rest: m[3] || '', dec, raw: null, hasComma };
 }
 
 // Animates between Before and After when showAfter changes.
@@ -862,7 +866,11 @@ function CountValue({ value, active, playKey = 0, duration = 1100 }) {
   }, [active, playKey, v.num, duration]);
   if (v.raw) return <>{v.raw}</>;
   const displaySign = v.sign === '+' ? '+' : (v.sign === '-' || v.sign === '−') ? '−' : '';
-  return <>{displaySign}{Math.abs(n).toFixed(v.dec)}{v.rest}</>;
+  const absN = Math.abs(n);
+  const formatted = v.hasComma
+    ? Math.round(absN).toLocaleString()
+    : absN.toFixed(v.dec);
+  return <>{displaySign}{formatted}{v.rest}</>;
 }
 
 function CaseCard({ c, project, index, isMobile }) {
@@ -970,7 +978,7 @@ function CaseCard({ c, project, index, isMobile }) {
             padding: '16px 16px 14px',
           }}>
             <div style={{fontSize: 34, fontWeight: 800, color: c.accent, letterSpacing: '-0.04em', lineHeight: 1}}>
-              {ba.summary.value}
+              <CountValue value={ba.summary.value} active={inView} playKey={playKey} />
             </div>
             <div style={{fontSize: 13.5, color: c.ink, fontWeight: 700, marginTop: 8}}>
               {ba.summary.label}
