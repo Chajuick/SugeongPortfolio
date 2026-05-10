@@ -122,6 +122,11 @@ const HERO_COPY = {
   eyebrow: 'CRM · Campaign Operation · Performance',
   headlineKo: '고객의 하루에 스며드는 메시지를 설계합니다',
   headlineEn: 'Designing messages that belong in a customer\u2019s day',
+  headlineLines: [
+    { text: '고객의 하루에' },
+    { accent: '스며드는', rest: ' 메시지를' },
+    { text: '설계합니다' },
+  ],
   sub: '감으로 보내지 않습니다. 브랜드의 톤, 고객의 맥락, 세그먼트와 성과 데이터를 함께 읽고 한 줄의 메시지가 행동으로 이어지도록 설계합니다.',
   competencies: [
     { k: 'Segment', v: '고객 맥락과 타겟 조건을 먼저 정의합니다.' },
@@ -155,7 +160,7 @@ const PROJECTS = [
     image: 'assets/01_brand_crm.png',
     cat: 'Brand CRM · Targeting',
     period: 'Gmarket · 2025 — 현재',
-    role: '기존 남성 중심 타겟을 여성 35~59세로 전환 제안해 동일 모수 기준 매출 2배를 확인했습니다.',
+    role: '동일 모수 기준 매출 2배를 확인한 타겟 전환 제안 — 남성 중심에서 여성 35~59세로 메시지 방향을 바꿨습니다.',
     title: '정수기 브랜드 타겟 전환 CRM 메시지 개선',
     problem: '기존 남성 중심 타겟과 푸른색 배너 톤을 재검토하고, 실제 구매 가능성이 높은 여성 타겟 중심으로 메시지 방향을 바꿨습니다.',
     segment: '정수기 브랜드 · 여성 35~59세 · 동일 모수 매출 비교',
@@ -168,8 +173,8 @@ const PROJECTS = [
     compare: {
       title: 'Sales Impact',
       summary: {
-        value: '200%+',
-        label: '동일 모수 대비 매출 증가',
+        value: '2×',
+        label: '동일 모수 매출 증가폭',
         caption: '여성 35~59세 타겟 전환 후',
       },
       note: '타겟 전환 이후 분홍 테마 홍보로 확장되었습니다.',
@@ -379,11 +384,403 @@ const VALUES = [
   },
 ];
 
+const SECTION_COPY = {
+  workTitle: '메시지를 보내기 전과 후를 함께 봅니다.',
+  workLead: '메시지 방향, 발송 운영, 성과 추적, 레퍼런스 정리까지 CRM 캠페인의 흐름이 보이도록 구성했습니다.',
+  aboutTitle: '일하는 방식 4가지.',
+  aboutLead: 'CRM 마케터로 일을 잘하기 위해 매일 지키려고 하는 네 가지 원칙입니다.',
+  aboutQuoteBefore: 'CRM은 발송 업무가 아닌',
+  aboutQuoteAccent: '설계 업무',
+  aboutQuoteAfter: '라고 믿습니다. 누구에게, 언제, 어떤 문장으로 도착하는지에 따라 같은 메시지의 의미는 달라지니까요.',
+  careerTitle: 'CRM 운영과 콘텐츠 경험이 같은 방향으로 쌓였습니다.',
+  careerLead: 'CRM 운영 경험과 콘텐츠 마케팅 경험을 고객 반응을 읽는 역량으로 연결해 정리했습니다.',
+  educationLead: '실무 도구 이해를 보완한 교육 이력입니다.',
+  approachTitle: '한 번의 캠페인이 다음 캠페인의 출발선이 되도록.',
+  approachLead: '가설을 세우고, 실행하고, 결과를 확인한 뒤 다음 캠페인의 기준으로 남깁니다.',
+  skillsTitle: '06 — Skills · 기능별 · 사용 빈도',
+  contactTitle: '같이 일해 볼까요?',
+  contactLead: '제 메시지가 당신의 고객에게도 자연스럽게 도착할 수 있도록.',
+};
+
+const EN = {
+  HERO_COPY: {
+    eyebrow: 'CRM · Campaign Operation · Performance',
+    headlineLines: [
+      { text: 'Designing CRM messages' },
+      { accent: 'that turn context', rest: ' into action' },
+    ],
+    sub: 'I don’t send by intuition alone. I connect brand tone, customer context, segment logic, and post-send data to design CRM campaigns that are clear, timely, and measurable.',
+    competencies: [
+      { k: 'Segment', v: 'Define audience context and targeting conditions before writing copy.' },
+      { k: 'Message', v: 'Shape the tone, benefit hierarchy, and CTA for each channel.' },
+      { k: 'Insight', v: 'Review post-send performance and turn learnings into the next campaign.' },
+    ],
+    stats: [
+      { text: '4', unit: 'Channels', label: 'CRM channels operated', sub: 'App Push · KakaoTalk · LMS · DM Email' },
+      { text: '1.5M+', unit: 'App Push', label: 'single-campaign send scale', sub: 'Large-audience setup · QA · post-send reporting' },
+      { text: '3+', unit: 'KPI', label: 'core performance metrics', sub: 'CTR · CVR · GMV · Reach · Buyers' },
+      { text: '1,000+', unit: 'Contents', label: 'SEO/content marketing experience', sub: 'Naver Influencer · 4,843 fans · 5,150 neighbors' },
+    ],
+  },
+  SECTION_COPY: {
+    workTitle: 'I look at what happens before and after a message is sent.',
+    workLead: 'Selected work across message direction, large-scale send operations, performance tracking, and CRM benchmarking.',
+    aboutTitle: 'Four principles behind my CRM work.',
+    aboutLead: 'The operating principles I use to keep CRM campaigns relevant, accurate, and measurable.',
+    aboutQuoteBefore: 'I treat CRM as',
+    aboutQuoteAccent: 'a design discipline',
+    aboutQuoteAfter: ', not a send operation. The same offer lands differently depending on who receives it, when it arrives, and how it is framed.',
+    careerTitle: 'CRM operations and content experience built toward one capability.',
+    careerLead: 'A timeline focused on campaign execution, customer response, content judgment, and stakeholder coordination.',
+    educationLead: 'Training that supports practical creative and digital marketing execution.',
+    approachTitle: 'Turning each campaign into a stronger starting point.',
+    approachLead: 'Plan, execute, check, and refine so each send leaves a clearer standard for the next campaign.',
+    skillsTitle: '06 — Skills · Function · Frequency',
+    contactTitle: 'Let’s talk CRM.',
+    contactLead: 'Open to CRM roles, campaign projects, and partnerships across consumer brands.',
+  },
+  VALUES: [
+    {
+      n: '01',
+      t: 'Start with customer context.',
+      d: 'Before writing copy, I define who receives the message, why it matters now, and what action the campaign expects.',
+    },
+    {
+      n: '02',
+      t: 'Protect the brand voice.',
+      d: 'I adjust benefit framing and tone by product category, audience profile, and brand image instead of forcing one message style across every campaign.',
+    },
+    {
+      n: '03',
+      t: 'Let performance sharpen judgment.',
+      d: 'I compare response by copy, segment, send time, and landing flow, then use CTR, CVR, and GMV to refine the next decision.',
+    },
+    {
+      n: '04',
+      t: 'Turn each campaign into an asset.',
+      d: 'Post-send reports become reusable standards: what worked, what underperformed, and what should be tested next.',
+    },
+  ],
+  PROJECTS: [
+    {
+      id: 'p1',
+      image: 'assets/01_brand_crm.png',
+      cat: 'Brand CRM · Targeting',
+      period: 'Gmarket · 2025 — Present',
+      role: 'Doubled sales on the same audience base by shifting CRM creative from male-oriented to women aged 35-59.',
+      title: 'Repositioning CRM messaging through audience targeting',
+      problem: 'The existing creative leaned on a blue, male-oriented tone. I reframed the audience and message direction around customers with higher purchase intent.',
+      segment: 'Water purifier brand · Women 35-59 · same-audience sales comparison',
+      actions: [
+        'Proposed women 35-59 as the primary audience',
+        'Adjusted banner tone, message framing, and CTA structure',
+        'Compared sales performance on the same audience base',
+        'Confirmed the follow-up shift toward a softer pink visual theme',
+      ],
+      compare: {
+        title: 'Sales Impact',
+        summary: {
+          value: '2×',
+          label: 'sales on same audience base',
+          caption: 'after shifting to women 35-59 targeting',
+        },
+        note: 'The audience shift later informed a broader pink-theme promotional direction.',
+      },
+      channels: ['KakaoTalk Plus Friend', 'Brand Message', 'Target Proposal'],
+      baseline: 'Brand message direction proposal',
+      metrics: [
+        { v: 'Audience', label: 'Target', base: 'Age and customer profile' },
+        { v: 'Tone', label: 'Message', base: 'Brand voice and visual direction' },
+        { v: 'Creative QA', label: 'Creative', base: 'Banner and CTA structure' },
+      ],
+      learn: 'A clearer audience definition made the creative direction and success criteria easier to align.',
+    },
+    {
+      id: 'p2',
+      image: 'assets/02_promotion.png',
+      cat: 'Big Promotion · App Push',
+      period: 'Gmarket · 2025 — Present',
+      role: 'For Big Smile Day (Gmarket’s flagship sitewide promotion): app push setup, targeting, QA, and post-send reporting at 1.5M+ scale.',
+      title: 'Big Smile Day CRM send operations',
+      problem: 'Large promotions involve high send volume and fast-changing schedules. I kept targeting, links, landing pages, parameters, and send timing aligned before each launch.',
+      segment: 'Big Smile Day · large audience · app push · send QA',
+      actions: [
+        'Checked campaign objective, send schedule, targeting conditions, and landing flow',
+        'Structured app push copy and banner messaging around the promotion context',
+        'QA’d parameters, links, landing pages, send time, and audience conditions',
+        'Reviewed reports after 1.5M+ scale app push sends',
+      ],
+      compare: {
+        title: 'Send Scale',
+        summary: {
+          value: '1.5M+',
+          label: 'single app push send scale',
+          caption: 'Big Smile Day setup · QA · reporting',
+        },
+        note: 'The work connected send quality control with post-send reporting for a major promotion.',
+      },
+      channels: ['App Push', 'Big Promotion', 'QA Checklist'],
+      baseline: 'Large-scale send reliability',
+      metrics: [
+        { v: '1.5M+', label: 'Scale', base: 'Single app push send' },
+        { v: 'QA', label: 'Quality', base: 'Links, landing, parameters' },
+        { v: 'Report', label: 'Follow-up', base: 'Post-send result review' },
+      ],
+      learn: 'For high-volume CRM sends, setup accuracy and pre-send QA are as important as the copy itself.',
+    },
+    {
+      id: 'p3',
+      image: 'assets/03_insight.png',
+      cat: 'Performance · Insight',
+      period: 'Gmarket · 2025 — Present',
+      role: 'Tracked CTR, CVR, GMV, and campaign response patterns, then translated results into operational learnings.',
+      title: 'CRM performance tracking and reporting',
+      problem: 'A campaign isn’t finished until its results are read. I compared responses by channel, audience logic, and message structure to identify the next improvement point.',
+      segment: 'Performance report · CTR/CVR/GMV · campaign response comparison',
+      actions: [
+        'Reviewed reach, CTR, CVR, GMV, buyers, and other key metrics after send',
+        'Compared click and purchase response by campaign type',
+        'Prepared anonymized or mosaic-ready report structures for internal review',
+        'Identified message and operation points to adjust in the next campaign',
+      ],
+      compare: {
+        title: 'Performance Signal',
+        summary: {
+          value: '2.7x',
+          label: 'representative CTR difference',
+          caption: 'Scenario campaign vs. Audience campaign',
+        },
+        note: 'In one representative case, Scenario campaign CTR was 2.7x higher than Audience campaign CTR.',
+      },
+      channels: ['Performance Report', 'Message Structure', 'Insight'],
+      baseline: 'Performance-led improvement loop',
+      metrics: [
+        { v: 'CTR/CVR', label: 'Click / Conversion', base: 'Copy and landing response' },
+        { v: 'GMV/Buyers', label: 'Purchase', base: 'Purchase result review' },
+        { v: 'Improve', label: 'Learning', base: 'Next campaign input' },
+      ],
+      learn: 'Performance tracking is not just reporting; it is the evidence used to refine targeting, copy, and send standards.',
+    },
+    {
+      id: 'p4',
+      image: 'assets/04_monotoring.png',
+      cat: 'Benchmarking · Insight · CRM Pattern',
+      period: 'Ongoing',
+      role: 'Monitored CRM messages from multiple brands to compare benefit framing, CTA structure, tone, and segmentation patterns.',
+      title: 'CRM message monitoring and insight board',
+      problem: 'Strong CRM messaging comes from steady observation. I collected and compared other brands’ message structures to build practical campaign hypotheses.',
+      segment: 'Subscribed messages from Daiso, Lotte Mart, Lotteria, Temu, and others',
+      actions: [
+        'Subscribed to KakaoTalk Plus Friend, notification, and app push messages',
+        'Compared benefit framing, title structure, CTA, and image usage',
+        'Observed tone and action triggers by audience and category',
+        'Organized reusable patterns and hypotheses for future campaigns',
+      ],
+      compare: {
+        title: 'Reference Board',
+        summary: {
+          value: '4+',
+          label: 'brand CRM messages benchmarked',
+          caption: 'benefit framing · CTA · tone patterns',
+        },
+        note: 'Benchmarking turns reference collection into sharper campaign hypotheses.',
+      },
+      channels: ['Benchmarking', 'KakaoTalk', 'App Push'],
+      baseline: 'Cross-brand CRM pattern comparison',
+      metrics: [
+        { v: 'Brands', label: 'Brands', base: 'Monitoring targets' },
+        { v: 'Messages', label: 'Messages', base: 'Subscribed CRM examples' },
+        { v: 'Insights', label: 'Insights', base: 'Patterns to test' },
+      ],
+      learn: 'References are most useful when they become testable hypotheses for the next CRM message.',
+    },
+  ],
+  CAREER: [
+    {
+      period: 'Jun 2025 — Present',
+      company: 'Gmarket',
+      role: 'CRM Marketer',
+      meta: {
+        channels: 'App Push · KakaoTalk Plus Friend · LMS · DM Email',
+        scale: 'Single app push campaign scale: 1.5M+ · post-send CTR/CVR/GMV tracking',
+        tools: 'Internal CRM system · Spreadsheet / Excel · Photoshop / Illustrator',
+      },
+      bullets: [
+        'Planned and operated Gmarket app push ad copy and banner messaging by promotion objective, targeting condition, and product category',
+        'Structured KakaoTalk Plus Friend messages across wide, list, and carousel formats, including title, body, and CTA',
+        'Managed LMS and DM Email setup: copy registration, parameters, send timing, targeting conditions, and final publishing',
+        'QA’d typos, links, landing pages, tracking parameters, and creative consistency before send',
+        'Reviewed reach, CTR, CVR, buyers, and GMV, then summarized follow-up points for reports',
+        'Coordinated schedule, creative revisions, and performance criteria with advertisers, agencies, and sales teams',
+      ],
+    },
+    {
+      period: 'Jan 2022 — Sep 2023',
+      company: 'Gangdong-gu Office, Urban Landscape Division',
+      role: 'PR / Culture Project Operations',
+      meta: {
+        channels: 'SNS · Local Campaign · Offline Program · Public Communication',
+        scale: 'Gangpul Cartoon Street culture project',
+        tools: 'Instagram · Facebook · Photo/video editing tools · Spreadsheet / Excel',
+      },
+      bullets: [
+        'Supported operations and PR for a local culture street development project',
+        'Coordinated with institutions, artists, and local communities on schedules and event operations',
+        'Planned, shot, edited, and operated social content for Instagram and Facebook',
+        'Prepared participant recruitment materials, posters, press content, and result reports',
+        'Contributed to online and offline PR that supported 60%+ year-over-year visitor growth',
+      ],
+    },
+    {
+      period: 'Mar 2023 — Aug 2024',
+      company: 'Cheonhailmi (Korean food brand)',
+      role: 'Brand / Content Activities',
+      meta: {
+        channels: 'SNS · Review Content · Short-form · Product Story',
+        scale: 'Product review and promotional content production',
+        tools: 'Photo/video editing tools · Photoshop / Illustrator · CapCut',
+      },
+      bullets: [
+        'Planned product marketing content and social promotional content',
+        'Created review content based on new and existing product tasting',
+        'Shot and edited product promotional videos and short-form content',
+        'Translated product strengths and customer response points into content structure',
+      ],
+    },
+    {
+      period: 'Jul 2023 — Jun 2024',
+      company: 'Caffebene PR Supporters',
+      role: 'Blog / Brand Content',
+      meta: {
+        channels: 'Naver Blog · Brand News · Review Content',
+        scale: 'New menu reviews and brand news promotion',
+        tools: 'Naver Blog · Photo/video editing tools · Spreadsheet / Excel',
+      },
+      bullets: [
+        'Created blog-based brand news and new-menu review content',
+        'Planned titles, thumbnails, and article structure with search exposure and traffic in mind',
+        'Operated content including taste reviews, image composition, and video editing',
+      ],
+    },
+    {
+      period: 'Ongoing',
+      company: 'Naver Food Influencer / Blog',
+      role: 'SEO Content Marketing',
+      meta: {
+        channels: 'Naver Blog · SEO Content · Review Content · Branded Content',
+        scale: '1,000+ posts · 4,843 followers · 5,150 subscribers (Naver Blog)',
+        tools: 'Naver Blog · Keyword Research · Thumbnail · Photo / Video Editing',
+      },
+      bullets: [
+        'Experimented with search intent, headline hooks, thumbnail composition, and content flow through Naver Food Influencer activity',
+        'Produced blog, review, and branded content while observing customer response and traffic patterns',
+        'Connected content experience to CRM copy through click motivation, product benefit framing, and customer language',
+      ],
+    },
+  ],
+  EDUCATION: [
+    {
+      period: 'Jan 2024 — Feb 2024',
+      title: 'GTQ Graphic Specialist Course',
+      org: 'Jinju Vocational Training School',
+      details: [
+        'KR national certification on graphic tools (Photoshop, Illustrator)',
+        'Photo editing, compositing, and image retouching basics',
+        'Poster, CI, editorial, web, and character design practice',
+        'Completed 140 hours of practical training',
+      ],
+    },
+    {
+      period: 'Sep 2023',
+      title: 'Digital Marketing Job Training',
+      org: 'Ablearn · marketing bootcamp',
+      details: [
+        'Digital marketing and performance strategy fundamentals',
+        'Ad creative planning and content production practice',
+        'Search, SNS, and channel-specific marketing tool understanding',
+        'Data-led targeting and performance improvement practice',
+        'Completed 100 hours of training',
+      ],
+    },
+  ],
+  ROUTINE: [
+    {
+      k: 'Plan',
+      t: 'Start with context',
+      d: 'I define the campaign objective, customer situation, brand tone, and success metric before writing the message.',
+      sub: ['Confirm campaign objective', 'Check brand voice', 'Define target and segment logic', 'Set key KPIs', 'Build a customer action hypothesis'],
+      artifact: 'Campaign brief',
+    },
+    {
+      k: 'Do',
+      t: 'Write, QA, and launch',
+      d: 'I write the copy, check the creative, confirm send timing and targeting, and run pre-send QA on links, landing pages, parameters, and audience conditions.',
+      sub: ['Write message and CTA', 'Review image and creative assets', 'Check links and landing pages', 'Confirm tracking parameters', 'Confirm send time and target', 'Publish final send'],
+      artifact: 'QA checklist',
+    },
+    {
+      k: 'Check',
+      t: 'Read the results',
+      d: 'I review reach, clicks, conversions, buyers, and GMV to see whether the original hypothesis matched actual customer response.',
+      sub: ['Review reach', 'Review CTR', 'Review CVR', 'Review GMV and buyers', 'Compare segment response', 'Check send-time response'],
+      artifact: 'Performance report',
+    },
+    {
+      k: 'Refine',
+      t: 'Carry the learning forward',
+      d: 'I save winning patterns and turn weak points into hypotheses for the next CRM campaign.',
+      sub: ['Document winning patterns', 'Record underperformance reasons', 'Update reference board', 'Share next-campaign insights'],
+      artifact: 'Pattern library',
+    },
+  ],
+  SKILLS: [
+    { g: 'CRM Operation', d: 'Campaigns · Channels · Send operations', items: [
+      { n: 'App Push operations', f: 3 },
+      { n: 'KakaoTalk Plus Friend operations', f: 3 },
+      { n: 'LMS / DM Email operations', f: 3 },
+      { n: 'Send setup / QA', f: 3 },
+      { n: 'Performance report management', f: 3 },
+      { n: 'Internal CRM operation system', f: 3 },
+    ]},
+    { g: 'Message & Creative', d: 'Copy · Tone · Creative assets', items: [
+      { n: 'CRM copywriting', f: 3 },
+      { n: 'Title/body/CTA structure', f: 3 },
+      { n: 'Brand tone adaptation', f: 3 },
+      { n: 'Ad creative planning', f: 2 },
+      { n: 'Creative request and review', f: 3 },
+      { n: 'Photoshop / Illustrator', f: 2 },
+      { n: 'CapCut / short-form editing', f: 2 },
+    ]},
+    { g: 'Data & Insight', d: 'Performance · Segments · Improvement', items: [
+      { n: 'CTR / CVR / GMV review', f: 3 },
+      { n: 'Reach / buyer metric review', f: 3 },
+      { n: 'Segment response comparison', f: 3 },
+      { n: 'Campaign reporting', f: 3 },
+      { n: 'Competitor CRM monitoring', f: 2 },
+      { n: 'Spreadsheet / Excel', f: 3 },
+    ]},
+    { g: 'Content Marketing', d: 'SEO · Blog · Branded content', items: [
+      { n: 'Naver Influencer operations', f: 2 },
+      { n: 'SEO content planning', f: 2 },
+      { n: 'Review content production', f: 2 },
+      { n: 'Branded content production', f: 2 },
+      { n: 'Photo / editing / thumbnail composition', f: 2 },
+      { n: 'Short-form content production', f: 2 },
+    ]},
+    { g: 'Collaboration', d: 'Stakeholders · Docs · Communication', items: [
+      { n: 'Advertiser communication', f: 3 },
+      { n: 'Agency communication', f: 3 },
+      { n: 'Sales team collaboration', f: 3 },
+      { n: 'Creative request documents', f: 2 },
+      { n: 'Feedback organization', f: 3 },
+      { n: 'Result report sharing', f: 3 },
+    ]},
+  ],
+};
+
 const I18N = {
   contactCta:    { ko: '연락하기 →', en: 'Contact →' },
   langToggleAria:{ ko: '언어 변경', en: 'Switch language' },
-  enBanner:      { en: 'English version is in preparation — body copy is still in Korean for now. The Profile Q&A on the right is fully bilingual.' },
-  enBannerCta:   { en: 'Switch back to Korean' },
 };
 
 const CHATBOT_QA = {
@@ -545,7 +942,7 @@ function PhotoSlot({ ratio = '4 / 5', label = 'Portrait — 인물 사진', radi
   );
 }
 
-window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER, EDUCATION, I18N, CHATBOT_QA };
+window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER, EDUCATION, SECTION_COPY, EN, I18N, CHATBOT_QA };
 window.useInView = useInView;
 window.CountUp = CountUp;
 window.Reveal = Reveal;

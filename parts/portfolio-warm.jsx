@@ -34,6 +34,8 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
   const t = (obj, fallback = '') => (obj && obj[lang]) || (obj && obj.ko) || fallback;
+  const P = lang === 'en' && D.EN ? D.EN : D;
+  const S = P.SECTION_COPY || D.SECTION_COPY;
 
   // detect artboard width once on mount (mobile breakpoint)
   const rootRef = React.useRef(null);
@@ -174,24 +176,6 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         </div>
       </div>
 
-      {/* EN mode banner — body copy not yet localized; signals Profile Q&A is fully bilingual */}
-      {lang === 'en' && (
-        <div style={{
-          background: c.accentSoft, color: c.ink,
-          padding: isMobile ? '10px 16px' : '10px 24px',
-          fontSize: isMobile ? 12 : 13, lineHeight: 1.5, textAlign: 'center',
-          borderBottom: `1px solid ${c.line}`,
-          display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, flexWrap: 'wrap',
-        }}>
-          <span>{D.I18N.enBanner.en}</span>
-          <button onClick={() => setLang('ko')} style={{
-            background: 'transparent', border: `1px solid ${c.ink}`, color: c.ink,
-            padding: '4px 12px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
-            fontFamily: 'inherit', fontWeight: 600,
-          }}>{D.I18N.enBannerCta.en}</button>
-        </div>
-      )}
-
       {/* hero — content-led; portrait as smaller editorial anchor */}
       <section data-anchor="home" data-screen-label="01 Hero" style={heroWrap}>
         <div style={heroGrid}>
@@ -203,19 +187,24 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             </Reveal>
             <Reveal delay={80}>
               <h1 style={heroH}>
-                <span style={{whiteSpace: 'nowrap'}}>고객의 하루에</span><br/>
-                <span style={{whiteSpace: 'nowrap'}}><span style={{color: c.accent}}>스며드는</span> 메시지를</span><br/>
-                <span style={{whiteSpace: 'nowrap'}}>설계합니다</span>
+                {P.HERO_COPY.headlineLines.map((line, i) => (
+                  <React.Fragment key={line}>
+                    <span style={{whiteSpace: 'nowrap'}}>
+                      {line.accent ? <><span style={{color: c.accent}}>{line.accent}</span>{line.rest}</> : line.text}
+                    </span>
+                    {i < P.HERO_COPY.headlineLines.length - 1 && <br/>}
+                  </React.Fragment>
+                ))}
               </h1>
             </Reveal>
             <Reveal delay={140}>
-              <p style={heroSub}>{D.HERO_COPY.sub}</p>
+              <p style={heroSub}>{P.HERO_COPY.sub}</p>
             </Reveal>
 
             {/* core competencies — borderless rule-line row, mirrors Selected Metrics language */}
             <Reveal delay={180}>
               <div style={competencyRow}>
-                {D.HERO_COPY.competencies.map((cm, i) => (
+                {P.HERO_COPY.competencies.map((cm, i) => (
                   <div key={cm.k} style={{
                     padding: isMobile ? '16px 0' : '18px 0',
                     paddingLeft: !isMobile && i > 0 ? 22 : 0,
@@ -257,7 +246,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               </svg>
               <img
                 src="assets/portrait.png"
-                alt={`${D.PERSON.nameKo} portrait`}
+                alt={`${lang === 'en' ? D.PERSON.nameEn : D.PERSON.nameKo} portrait`}
                 style={{
                   position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
                   height: '100%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom',
@@ -272,7 +261,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
                 fontSize: 11.5, color: c.ink, fontWeight: 500,
                 boxShadow: '0 8px 24px -16px rgba(0,0,0,0.18)',
                 fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', textTransform: 'uppercase',
-              }}>{D.PERSON.nameKo} · CRM @ Seoul</div>
+              }}>{lang === 'en' ? D.PERSON.nameEn : D.PERSON.nameKo} · CRM @ Seoul</div>
             </div>
           </Reveal>
         </div>
@@ -282,17 +271,17 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
       <div style={{...wrap, paddingTop: isMobile ? 16 : 24, paddingBottom: isMobile ? 32 : 48}}>
         <Reveal>
           <div style={{fontSize: 12, fontWeight: 700, color: c.faint, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 14, fontFamily: "'IBM Plex Mono', monospace"}}>
-            Selected metrics · 대표 성과
+            {lang === 'en' ? 'Selected metrics' : 'Selected metrics · 대표 성과'}
           </div>
           <div style={{
             display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
             borderTop: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`,
           }}>
-            {D.HERO_COPY.stats.map((s, i) => (
+            {P.HERO_COPY.stats.map((s, i) => (
               <div key={i} style={{
                 padding: isMobile ? '20px 0' : '24px 24px 24px 0',
-                borderRight: !isMobile && i < D.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
-                borderBottom: isMobile && i < D.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
+                borderRight: !isMobile && i < P.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
+                borderBottom: isMobile && i < P.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
                 paddingLeft: !isMobile && i > 0 ? 24 : 0,
               }}>
                 <div style={{display: 'flex', alignItems: 'baseline', gap: 8, minHeight: isMobile ? 42 : 44}}>
@@ -321,13 +310,13 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div style={secHead}>
             <div>
               <div style={secNum}>02 — Featured Work</div>
-              <h2 style={secTitle}>메시지를 보내기 전과 후를 함께 봅니다.</h2>
+              <h2 style={secTitle}>{S.workTitle}</h2>
             </div>
-            <p style={secLead}>메시지 방향, 발송 운영, 성과 추적, 레퍼런스 정리까지 CRM 캠페인의 흐름이 보이도록 구성했습니다.</p>
+            <p style={secLead}>{S.workLead}</p>
           </div>
         </div>
 
-        <CaseStrip c={c} isMobile={isMobile} wrap={wrap} />
+        <CaseStrip c={c} isMobile={isMobile} wrap={wrap} projects={P.PROJECTS} lang={lang} />
       </section>
 
       {/* ABOUT — pull quote + 4 working principles (operational, not emotional) */}
@@ -341,9 +330,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div style={secHead}>
             <div>
               <div style={secNum}>03 — About</div>
-              <h2 style={secTitle}>일하는 방식 4가지.</h2>
+              <h2 style={secTitle}>{S.aboutTitle}</h2>
             </div>
-            <p style={secLead}>CRM 마케터로 일을 잘하기 위해 매일 지키려고 하는 네 가지 원칙입니다.</p>
+            <p style={secLead}>{S.aboutLead}</p>
           </div>
 
           <Reveal>
@@ -351,8 +340,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               fontSize: isMobile ? 22 : 30, lineHeight: 1.4, margin: '0 0 48px', fontWeight: 600,
               letterSpacing: '-0.025em', color: c.ink, maxWidth: 820,
             }}>
-              CRM은 발송 업무가 아닌 <span style={{color: c.accent}}>설계 업무</span>라고 믿습니다.
-              누구에게, 언제, 어떤 문장으로 도착하는지에 따라 같은 메시지의 의미는 달라지니까요.
+              {S.aboutQuoteBefore} <span style={{color: c.accent}}>{S.aboutQuoteAccent}</span>{S.aboutQuoteAfter}
             </p>
           </Reveal>
 
@@ -360,7 +348,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
             borderTop: `1px solid ${c.line}`,
           }}>
-            {D.VALUES.map((v, i) => (
+            {P.VALUES.map((v, i) => (
               <Reveal key={v.n} delay={i * 70}>
                 <div style={{
                   padding: isMobile ? '24px 0' : '28px 0',
@@ -390,12 +378,12 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         <div style={secHead}>
           <div>
             <div style={secNum}>04 — Career</div>
-              <h2 style={secTitle}>CRM 운영과 콘텐츠 경험이<br/>같은 방향으로 쌓였습니다.</h2>
+              <h2 style={secTitle}>{S.careerTitle}</h2>
             </div>
-          <p style={secLead}>CRM 운영 경험과 콘텐츠 마케팅 경험을 고객 반응을 읽는 역량으로 연결해 정리했습니다.</p>
+          <p style={secLead}>{S.careerLead}</p>
         </div>
         <div>
-          {D.CAREER.map((job, i) => (
+          {P.CAREER.map((job, i) => (
             <Reveal key={i} delay={i * 60}>
               <div style={{
                 display: 'grid',
@@ -403,7 +391,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
                 gap: isMobile ? 12 : 40,
                 padding: isMobile ? '28px 0' : '36px 0',
                 borderTop: `1px solid ${c.line}`,
-                borderBottom: i === D.CAREER.length - 1 ? `1px solid ${c.line}` : 'none',
+                borderBottom: i === P.CAREER.length - 1 ? `1px solid ${c.line}` : 'none',
                 alignItems: 'start',
               }}>
                 <div style={{
@@ -462,7 +450,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             </Reveal>
           ))}
         </div>
-        {D.EDUCATION && D.EDUCATION.length > 0 && (
+        {P.EDUCATION && P.EDUCATION.length > 0 && (
           <div style={{marginTop: isMobile ? 48 : 72}}>
             <div style={{
               display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
@@ -470,7 +458,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             }}>
               <div style={{...secNum, fontSize: 13}}>Education · Certification</div>
               <div style={{fontSize: 12.5, color: c.faint, lineHeight: 1.6}}>
-                실무 도구 이해를 보완한 교육 이력입니다.
+                {S.educationLead}
               </div>
             </div>
             <div style={{
@@ -480,13 +468,13 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               borderTop: `1px solid ${c.line}`,
               borderBottom: `1px solid ${c.line}`,
             }}>
-              {D.EDUCATION.map((edu, i) => (
+              {P.EDUCATION.map((edu, i) => (
                 <Reveal key={edu.title} delay={i * 60}>
                   <div style={{
                     padding: isMobile ? '24px 0' : '28px 28px 28px 0',
                     paddingLeft: !isMobile && i > 0 ? 28 : 0,
-                    borderRight: !isMobile && i < D.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
-                    borderBottom: isMobile && i < D.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
+                    borderRight: !isMobile && i < P.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
+                    borderBottom: isMobile && i < P.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
                   }}>
                     <div style={{fontSize: 12, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', marginBottom: 10}}>
                       {edu.period}
@@ -522,12 +510,12 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div style={secHead}>
             <div>
               <div style={secNum}>05 — Approach</div>
-              <h2 style={secTitle}>한 번의 캠페인이<br/>다음 캠페인의 출발선이 되도록.</h2>
+              <h2 style={secTitle}>{S.approachTitle}</h2>
             </div>
-            <p style={secLead}>가설을 세우고, 실행하고, 결과를 확인한 뒤 다음 캠페인의 기준으로 남깁니다.</p>
+            <p style={secLead}>{S.approachLead}</p>
           </div>
           <div>
-          {D.ROUTINE.map((r, i) => (
+          {P.ROUTINE.map((r, i) => (
             <Reveal key={r.k} delay={i * 80}>
               <div style={{
                 display: 'grid',
@@ -535,7 +523,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
                 gap: isMobile ? 16 : 40,
                 padding: isMobile ? '28px 0' : '36px 0',
                 borderTop: `1px solid ${c.line}`,
-                borderBottom: i === D.ROUTINE.length - 1 ? `1px solid ${c.line}` : 'none',
+                borderBottom: i === P.ROUTINE.length - 1 ? `1px solid ${c.line}` : 'none',
                 alignItems: 'start',
               }}>
                 <div>
@@ -575,14 +563,14 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         {/* Skills — function-based with frequency dots */}
         <div data-anchor="skills" data-screen-label="06 Skills" style={{marginTop: isMobile ? 56 : 96}}>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 24, flexWrap: 'wrap', gap: 8}}>
-            <div style={{...secNum, fontSize: 13}}>06 — Skills · 기능별 · 사용 빈도</div>
+            <div style={{...secNum, fontSize: 13}}>{S.skillsTitle}</div>
             <div style={{fontSize: 12, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', display: 'flex', gap: 16}}>
               <span><span style={{color: c.accent, fontWeight: 700}}>●●●</span> Daily</span>
               <span><span style={{color: c.accent, fontWeight: 700}}>●●</span><span style={{color: c.line}}>●</span> Weekly</span>
               <span><span style={{color: c.accent, fontWeight: 700}}>●</span><span style={{color: c.line}}>●●</span> Occasional</span>
             </div>
           </div>
-          <SkillsGrid c={c} isMobile={isMobile} />
+          <SkillsGrid c={c} isMobile={isMobile} skills={P.SKILLS} />
         </div>
         </div>
       </section>
@@ -592,10 +580,10 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         <Reveal>
           <div style={{...secNum, marginBottom: 24}}>07 — Contact</div>
           <h2 style={{fontSize: isMobile ? 44 : 76, lineHeight: 1.05, margin: '0 0 28px', letterSpacing: '-0.035em', fontWeight: 700}}>
-            <span style={{whiteSpace: 'nowrap'}}>같이 일해 볼까요?</span>
+            <span style={{whiteSpace: 'nowrap'}}>{S.contactTitle}</span>
           </h2>
           <p style={{fontSize: isMobile ? 15 : 16.5, color: c.mute, margin: '0 0 36px', lineHeight: 1.7}}>
-            제 메시지가 당신의 고객에게도<br/>자연스럽게 도착할 수 있도록.
+            {S.contactLead}
           </p>
           <div style={{display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap'}}>
             <a href={emailHref} onClick={guardPlaceholderLink} style={{...cta, textDecoration:'none'}}>{D.PERSON.email} →</a>
@@ -608,22 +596,11 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               Naver Influencer
             </a>
           </div>
-          <div style={{marginTop: 48, fontSize: 14, color: c.mute, fontWeight: 500, display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap'}}>
-            <a
-              data-warm-link
-              href="https://in.naver.com/gorgeous"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{color: 'inherit', textDecoration: 'none'}}
-            >
-              Naver Influencer
-            </a>
-          </div>
         </Reveal>
       </section>
 
       <div style={{borderTop: `1px solid ${c.line}`, padding: isMobile ? '20px 24px 112px' : '24px 56px 44px', display:'flex', justifyContent:'space-between', alignItems:'center', fontSize: 13, color: c.faint, fontWeight: 500}}>
-        <span>© 2026 {D.PERSON.nameKo}</span>
+        <span>© 2026 {lang === 'en' ? D.PERSON.nameEn : D.PERSON.nameKo}</span>
         <span>v.2026.05</span>
       </div>
 
@@ -654,8 +631,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Skills — function-based grouping with frequency dots (Daily/Weekly/Occasional)
-function SkillsGrid({ c, isMobile }) {
-  const D = window.PORTFOLIO_DATA;
+function SkillsGrid({ c, isMobile, skills }) {
   const FreqDots = ({ f }) => (
     <span style={{
       fontSize: 12, letterSpacing: '0.1em', fontFamily: "'IBM Plex Mono', monospace",
@@ -667,10 +643,10 @@ function SkillsGrid({ c, isMobile }) {
   );
   return (
     <div style={{display:'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: isMobile ? 24 : 0}}>
-      {D.SKILLS.map((g, i) => {
+      {skills.map((g, i) => {
         const isRightCol = !isMobile && i % 2 === 1;
         const isLeftCol = !isMobile && i % 2 === 0;
-        const hasRightNeighbor = isLeftCol && i + 1 < D.SKILLS.length;
+        const hasRightNeighbor = isLeftCol && i + 1 < skills.length;
         return (
           <div key={g.g} style={{
             paddingLeft: isRightCol ? 32 : 0,
@@ -679,7 +655,7 @@ function SkillsGrid({ c, isMobile }) {
             paddingBottom: 24,
             borderTop: !isMobile && i >= 2 ? `1px solid ${c.line}` : 'none',
             borderRight: hasRightNeighbor ? `1px solid ${c.line}` : 'none',
-            borderBottom: isMobile && i < D.SKILLS.length - 1 ? `1px solid ${c.line}` : 'none',
+            borderBottom: isMobile && i < skills.length - 1 ? `1px solid ${c.line}` : 'none',
           }}>
             <div style={{display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6}}>
               <span style={{fontSize: 12.5, fontWeight: 700, color: c.ink, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace"}}>{g.g}</span>
@@ -706,8 +682,7 @@ function SkillsGrid({ c, isMobile }) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Horizontal-scroll case strip — UNIFIED palette (paper + ink only, accent as small mark)
-function CaseStrip({ c, isMobile, wrap }) {
-  const D = window.PORTFOLIO_DATA;
+function CaseStrip({ c, isMobile, wrap, projects, lang }) {
   const scrollerRef = React.useRef(null);
   const [progress, setProgress] = React.useState(0);
   const [maxScroll, setMaxScroll] = React.useState(1);
@@ -734,7 +709,7 @@ function CaseStrip({ c, isMobile, wrap }) {
   const sidePad = isMobile ? 24 : 56;
   const atStart = progress <= 8;
   const atEnd = progress >= maxScroll - 8;
-  const totalCases = D.PROJECTS.length;
+  const totalCases = projects.length;
   const currentIdx = Math.min(totalCases, Math.round((progress / maxScroll) * (totalCases - 1)) + 1);
 
   return (
@@ -751,8 +726,8 @@ function CaseStrip({ c, isMobile, wrap }) {
             scrollPaddingLeft: sidePad,
           }}
         >
-          {D.PROJECTS.map((p, i) => (
-            <CaseCard key={p.id} c={c} project={p} index={i} isMobile={isMobile} />
+          {projects.map((p, i) => (
+            <CaseCard key={p.id} c={c} project={p} index={i} isMobile={isMobile} lang={lang} />
           ))}
           <div style={{flex: `0 0 ${sidePad}px`}}></div>
         </div>
@@ -801,13 +776,13 @@ function CaseStrip({ c, isMobile, wrap }) {
         }}>{String(currentIdx).padStart(2, '0')} / {String(totalCases).padStart(2, '0')}</div>
 
         <div style={{display:'flex', gap:8}}>
-          <button onClick={() => scrollBy(-1)} aria-label="이전" disabled={atStart} style={{
+          <button onClick={() => scrollBy(-1)} aria-label={lang === 'en' ? 'Previous' : '이전'} disabled={atStart} style={{
             width: 40, height: 40, borderRadius: 999, background: 'transparent',
             border: `1px solid ${c.line}`, cursor: atStart ? 'default' : 'pointer', fontSize: 16,
             color: atStart ? c.faint : c.ink, fontFamily: 'inherit', opacity: atStart ? 0.5 : 1,
             transition: 'opacity .2s ease, color .2s ease',
           }}>←</button>
-          <button onClick={() => scrollBy(1)} aria-label="다음" disabled={atEnd} style={{
+          <button onClick={() => scrollBy(1)} aria-label={lang === 'en' ? 'Next' : '다음'} disabled={atEnd} style={{
             width: 40, height: 40, borderRadius: 999, background: atEnd ? 'transparent' : c.ink,
             border: `1px solid ${atEnd ? c.line : c.ink}`, cursor: atEnd ? 'default' : 'pointer', fontSize: 16,
             color: atEnd ? c.faint : c.bg, fontFamily: 'inherit', opacity: atEnd ? 0.5 : 1,
@@ -921,14 +896,18 @@ function CaseCard({ c, project, index, isMobile }) {
 
   const ba = project.compare || {
     title: 'Before / After',
-    summary: { value: 'Review', label: '성과 확인', caption: '발송 후 리포트 기준' },
+    summary: { value: 'Review', label: 'Performance review', caption: 'Post-send report' },
     beforeLabel: 'Before',
     afterLabel: 'After',
-    before: { copy: project.problem, primary: 'Before', secondary: '기준' },
-    after: { copy: project.learn, primary: 'After', secondary: '결과' },
+    before: { copy: project.problem, primary: 'Before', secondary: 'Context' },
+    after: { copy: project.learn, primary: 'After', secondary: 'Result' },
     note: '',
   };
-  const cur = showAfter ? ba.after : ba.before;
+  const beforeCopy = ba.before?.copy || project.problem || '';
+  const afterCopy = ba.after?.copy || project.learn || '';
+  const cur = showAfter
+    ? { copy: afterCopy, primary: ba.after?.primary || 'After', secondary: ba.after?.secondary || 'Result' }
+    : { copy: beforeCopy, primary: ba.before?.primary || 'Before', secondary: ba.before?.secondary || 'Context' };
 
   return (
     <article
@@ -960,7 +939,7 @@ function CaseCard({ c, project, index, isMobile }) {
               {project.cat} · 0{index+1}
             </span>
             <span style={{fontSize: 11.5, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', whiteSpace: 'nowrap'}}>
-              {project.period.replace(' · 2025 — 현재', '')}
+              {project.period.replace(/ · 2025 — (현재|Present)/, '')}
             </span>
           </div>
           <h3 style={{fontSize: isMobile ? 19 : 22, fontWeight: 700, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.32}}>
