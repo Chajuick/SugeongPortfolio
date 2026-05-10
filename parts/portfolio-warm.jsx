@@ -59,7 +59,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
   React.useEffect(() => {
     const root = rootRef.current; if (!root) return;
     const handler = () => {
-      const ids = ['home','work','about','career','approach','contact'];
+      const ids = ['home','work','about','career','approach','skills','contact'];
       const y = root.scrollTop + 120;
       let cur = 'home';
       for (const id of ids) { const el = root.querySelector(`[data-anchor="${id}"]`); if (el && el.offsetTop <= y) cur = id; }
@@ -127,6 +127,11 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
     marginBottom: 40,
   };
   const ctaText = { background: 'transparent', color: c.mute, padding: '12px 4px', fontSize: 13.5, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none', fontWeight: 500, fontFamily: 'inherit', textDecoration: 'underline', textUnderlineOffset: 4, textDecorationColor: c.line };
+  const isEmailReady = D.PERSON.email && D.PERSON.email.includes('@');
+  const emailHref = isEmailReady ? `mailto:${D.PERSON.email}` : '#';
+  const guardPlaceholderLink = (e) => {
+    if (!isEmailReady) e.preventDefault();
+  };
 
   return (
     <div ref={rootRef} data-scroll-root data-pwarm style={root}>
@@ -158,7 +163,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             {lang === 'en' ? D.PERSON.nameEn : D.PERSON.nameKo}
           </div>
           <div style={navLinks}>
-            {[['home','Home'],['work','Work'],['about','About'],['career','Career'],['approach','Approach'],['contact','Contact']].map(([id,l]) => (
+            {[['home','Home'],['work','Work'],['about','About'],['career','Career'],['approach','Approach'],['skills','Skills'],['contact','Contact']].map(([id,l]) => (
               <span key={id} style={navLink(id)} data-warm-link onClick={() => goTo(id)}>{l}</span>
             ))}
           </div>
@@ -193,14 +198,14 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div>
             <Reveal>
               <div style={{...eyebrow, fontFamily: "'IBM Plex Mono', monospace", textTransform: 'uppercase', letterSpacing: '0.08em', color: c.mute}}>
-                CRM MARKETER · SEOUL · 5 YEARS
+                CRM MARKETER · SEOUL
               </div>
             </Reveal>
             <Reveal delay={80}>
               <h1 style={heroH}>
                 <span style={{whiteSpace: 'nowrap'}}>고객의 하루에</span><br/>
                 <span style={{whiteSpace: 'nowrap'}}><span style={{color: c.accent}}>스며드는</span> 메시지를</span><br/>
-                <span style={{whiteSpace: 'nowrap'}}>설계합니다.</span>
+                <span style={{whiteSpace: 'nowrap'}}>설계합니다</span>
               </h1>
             </Reveal>
             <Reveal delay={140}>
@@ -232,8 +237,7 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             <Reveal delay={220}>
               <div style={{display:'flex', gap:10, flexWrap:'wrap', alignItems: 'center'}}>
                 <button style={cta} onClick={() => goTo('work')}>View Work →</button>
-                <a href={`mailto:${D.PERSON.email}`} style={{...ctaGhost, textDecoration:'none'}}>Email</a>
-                <a href="#" onClick={(e) => e.preventDefault()} style={ctaText}>Resume ↓</a>
+                <a href={emailHref} onClick={guardPlaceholderLink} style={{...ctaGhost, textDecoration:'none'}}>Email</a>
               </div>
             </Reveal>
           </div>
@@ -281,24 +285,29 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             Selected metrics · 대표 성과
           </div>
           <div style={{
-            display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+            display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
             borderTop: `1px solid ${c.line}`, borderBottom: `1px solid ${c.line}`,
           }}>
-            {[
-              { v: 142, suffix: '+', l: 'CRM Campaigns shipped', sub: '2021 – 2025 · 4년 누적' },
-              { v: 38, suffix: '%', l: 'Avg. open rate lift', sub: 'vs 직전 분기 평균' },
-              { v: 24, suffix: '%', l: 'Reactivation lift', sub: '60–120일 무구매 · vs control' },
-            ].map((s, i) => (
+            {D.HERO_COPY.stats.map((s, i) => (
               <div key={i} style={{
                 padding: isMobile ? '20px 0' : '24px 24px 24px 0',
-                borderRight: !isMobile && i < 2 ? `1px solid ${c.line}` : 'none',
-                borderBottom: isMobile && i < 2 ? `1px solid ${c.line}` : 'none',
+                borderRight: !isMobile && i < D.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
+                borderBottom: isMobile && i < D.HERO_COPY.stats.length - 1 ? `1px solid ${c.line}` : 'none',
                 paddingLeft: !isMobile && i > 0 ? 24 : 0,
               }}>
-                <div style={{fontSize: isMobile ? 40 : 44, fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1, color: c.ink}}>
-                  <CountUp to={s.v} suffix={s.suffix} />
+                <div style={{display: 'flex', alignItems: 'baseline', gap: 8, minHeight: isMobile ? 42 : 44}}>
+                  <span style={{fontSize: isMobile ? 34 : 36, fontWeight: 700, letterSpacing: '-0.035em', lineHeight: 1.08, color: c.ink}}>
+                    {typeof s.v === 'number'
+                      ? <CountUp to={s.v} suffix={s.suffix || ''} />
+                      : s.text}
+                  </span>
+                  {s.unit && (
+                    <span style={{fontSize: 11.5, fontWeight: 700, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.06em', textTransform: 'uppercase'}}>
+                      {s.unit}
+                    </span>
+                  )}
                 </div>
-                <div style={{fontSize: 14, color: c.ink, marginTop: 12, fontWeight: 600}}>{s.l}</div>
+                <div style={{fontSize: 14, color: c.ink, marginTop: 12, fontWeight: 600}}>{s.label}</div>
                 <div style={{fontSize: 12.5, color: c.faint, marginTop: 4, fontWeight: 500, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>{s.sub}</div>
               </div>
             ))}
@@ -312,9 +321,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           <div style={secHead}>
             <div>
               <div style={secNum}>02 — Featured Work</div>
-              <h2 style={secTitle}>지난 분기, 이런 메시지를 보냈습니다.</h2>
+              <h2 style={secTitle}>메시지를 보내기 전과 후를 함께 봅니다.</h2>
             </div>
-            <p style={secLead}>각 케이스는 화면, 결과, 그리고 그 결과에서 배운 한 줄을 같이 보여줍니다.</p>
+            <p style={secLead}>각 케이스는 문제, 접근, 실행, 결과, 학습이 보이도록 구성했습니다. 실제 수치와 스크린샷은 확인 후 교체합니다.</p>
           </div>
         </div>
 
@@ -381,9 +390,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
         <div style={secHead}>
           <div>
             <div style={secNum}>04 — Career</div>
-            <h2 style={secTitle}>5년의 발자국,<br/>매달 보낸 메시지로 쌓였습니다.</h2>
-          </div>
-          <p style={secLead}>운영 → 기획 → 시퀀스 설계로 무게중심을 옮겨 왔습니다.</p>
+              <h2 style={secTitle}>CRM 운영과 콘텐츠 경험이<br/>같은 방향으로 쌓였습니다.</h2>
+            </div>
+          <p style={secLead}>실제 경력과 확인된 경험 중심으로 정리했습니다. 내부 정보와 미확인 수치는 노출하지 않습니다.</p>
         </div>
         <div>
           {D.CAREER.map((job, i) => (
@@ -453,6 +462,53 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             </Reveal>
           ))}
         </div>
+        {D.EDUCATION && D.EDUCATION.length > 0 && (
+          <div style={{marginTop: isMobile ? 48 : 72}}>
+            <div style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+              marginBottom: 18, gap: 16, flexWrap: 'wrap',
+            }}>
+              <div style={{...secNum, fontSize: 13}}>Education · Certification</div>
+              <div style={{fontSize: 12.5, color: c.faint, lineHeight: 1.6}}>
+                자격증은 실제 보유 여부와 연도 확인 후 추가합니다.
+              </div>
+            </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+              gap: isMobile ? 18 : 0,
+              borderTop: `1px solid ${c.line}`,
+              borderBottom: `1px solid ${c.line}`,
+            }}>
+              {D.EDUCATION.map((edu, i) => (
+                <Reveal key={edu.title} delay={i * 60}>
+                  <div style={{
+                    padding: isMobile ? '24px 0' : '28px 28px 28px 0',
+                    paddingLeft: !isMobile && i > 0 ? 28 : 0,
+                    borderRight: !isMobile && i < D.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
+                    borderBottom: isMobile && i < D.EDUCATION.length - 1 ? `1px solid ${c.line}` : 'none',
+                  }}>
+                    <div style={{fontSize: 12, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', marginBottom: 10}}>
+                      {edu.period}
+                    </div>
+                    <h3 style={{fontSize: isMobile ? 18 : 20, lineHeight: 1.35, margin: '0 0 4px', letterSpacing: '-0.02em'}}>
+                      {edu.title}
+                    </h3>
+                    <div style={{fontSize: 13.5, color: c.accent, fontWeight: 600, marginBottom: 14}}>{edu.org}</div>
+                    <ul style={{margin: 0, padding: 0, listStyle: 'none'}}>
+                      {edu.details.map((d, j) => (
+                        <li key={j} style={{fontSize: 14, lineHeight: 1.65, color: c.mute, paddingLeft: 14, position: 'relative', marginBottom: 4}}>
+                          <span style={{position: 'absolute', left: 0, top: 11, width: 6, height: 1, background: c.faint}}></span>
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* APPROACH — services + routine merged into one editorial flow with artifacts */}
@@ -468,14 +524,14 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
               <div style={secNum}>05 — Approach</div>
               <h2 style={secTitle}>한 번의 캠페인이<br/>다음 캠페인의 출발선이 되도록.</h2>
             </div>
-            <p style={secLead}>가설 → 실행 → 검증 → 개선. 각 단계마다 산출물 한 가지를 남깁니다.</p>
+            <p style={secLead}>가설을 세우고, 실행하고, 결과를 확인한 뒤 다음 캠페인의 기준으로 남깁니다.</p>
           </div>
           <div>
           {D.ROUTINE.map((r, i) => (
             <Reveal key={r.k} delay={i * 80}>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : '240px 1fr 200px',
+                gridTemplateColumns: isMobile ? '1fr' : '260px 1fr',
                 gap: isMobile ? 16 : 40,
                 padding: isMobile ? '28px 0' : '36px 0',
                 borderTop: `1px solid ${c.line}`,
@@ -485,6 +541,16 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
                 <div>
                   <div style={{fontSize: 12, fontWeight: 700, color: c.accent, letterSpacing: '0.08em', marginBottom: 10, fontFamily: "'IBM Plex Mono', monospace"}}>0{i+1} · {r.k.toUpperCase()}</div>
                   <h3 style={{fontSize: isMobile ? 22 : 24, fontWeight: 700, margin: 0, letterSpacing: '-0.025em', lineHeight: 1.3}}>{r.t}</h3>
+                  <div style={{
+                    fontSize: 12, padding: '10px 12px', background: c.bg, borderRadius: 4,
+                    border: `1px solid ${c.line}`, color: c.mute, fontWeight: 500,
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    marginTop: 16, maxWidth: '100%',
+                    fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em',
+                  }}>
+                    <span style={{color: c.faint}}>→ ARTIFACT</span>
+                    <span style={{color: c.ink, fontWeight: 600, whiteSpace: 'normal'}}>{r.artifact}</span>
+                  </div>
                 </div>
                 <div style={{paddingTop: isMobile ? 0 : 4}}>
                   <p style={{fontSize: 15, lineHeight: 1.7, color: c.mute, margin: '0 0 16px'}}>{r.d}</p>
@@ -501,26 +567,15 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
                     ))}
                   </ul>
                 </div>
-                <div style={{
-                  fontSize: 12, padding: '12px 16px', background: c.bg, borderRadius: 4,
-                  border: `1px solid ${c.line}`, color: c.mute, fontWeight: 500,
-                  display: 'inline-flex', alignItems: 'center', gap: 6,
-                  justifySelf: isMobile ? 'start' : 'end',
-                  marginTop: isMobile ? 0 : 4, whiteSpace: 'nowrap',
-                  fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em',
-                }}>
-                  <span style={{color: c.faint}}>→ ARTIFACT</span>
-                  <span style={{color: c.ink, fontWeight: 600}}>{r.artifact}</span>
-                </div>
               </div>
             </Reveal>
           ))}
         </div>
 
         {/* Skills — function-based with frequency dots */}
-        <div style={{marginTop: isMobile ? 56 : 96}}>
+        <div data-anchor="skills" data-screen-label="06 Skills" style={{marginTop: isMobile ? 56 : 96}}>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 24, flexWrap: 'wrap', gap: 8}}>
-            <div style={{...secNum, fontSize: 13}}>Skills · 기능별 · 빈도 표시</div>
+            <div style={{...secNum, fontSize: 13}}>06 — Skills · 기능별 · 사용 빈도</div>
             <div style={{fontSize: 12, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', display: 'flex', gap: 16}}>
               <span><span style={{color: c.accent, fontWeight: 700}}>●●●</span> Daily</span>
               <span><span style={{color: c.accent, fontWeight: 700}}>●●</span><span style={{color: c.line}}>●</span> Weekly</span>
@@ -533,9 +588,9 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
       </section>
 
       {/* CONTACT */}
-      <section data-anchor="contact" data-screen-label="06 Contact" style={{...wrap, paddingTop: isMobile ? 80 : 140, paddingBottom: isMobile ? 80 : 140, textAlign: 'center'}}>
+      <section data-anchor="contact" data-screen-label="07 Contact" style={{...wrap, paddingTop: isMobile ? 80 : 140, paddingBottom: isMobile ? 80 : 140, textAlign: 'center'}}>
         <Reveal>
-          <div style={{...secNum, marginBottom: 24}}>06 — Contact</div>
+          <div style={{...secNum, marginBottom: 24}}>07 — Contact</div>
           <h2 style={{fontSize: isMobile ? 44 : 76, lineHeight: 1.05, margin: '0 0 28px', letterSpacing: '-0.035em', fontWeight: 700}}>
             <span style={{whiteSpace: 'nowrap'}}>같이 일해 볼까요?</span>
           </h2>
@@ -543,23 +598,36 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
             제 메시지가 당신의 고객에게도<br/>자연스럽게 도착할 수 있도록.
           </p>
           <div style={{display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap'}}>
-            <a href={`mailto:${D.PERSON.email}`} style={{...cta, textDecoration:'none'}}>{D.PERSON.email} →</a>
-            <a href="#" style={{...ctaGhost, textDecoration:'none'}} onClick={(e) => e.preventDefault()}>Resume.pdf ↓</a>
+            <a href={emailHref} onClick={guardPlaceholderLink} style={{...cta, textDecoration:'none'}}>{D.PERSON.email} →</a>
+            <a
+              href="https://in.naver.com/gorgeous"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{...ctaGhost, textDecoration:'none'}}
+            >
+              Naver Influencer
+            </a>
           </div>
           <div style={{marginTop: 48, fontSize: 14, color: c.mute, fontWeight: 500, display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap'}}>
-            <span data-warm-link style={{cursor:'pointer'}}>LinkedIn</span>
-            <span data-warm-link style={{cursor:'pointer'}}>Brunch</span>
-            <span data-warm-link style={{cursor:'pointer'}}>Notion Resume</span>
+            <a
+              data-warm-link
+              href="https://in.naver.com/gorgeous"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{color: 'inherit', textDecoration: 'none'}}
+            >
+              Naver Influencer
+            </a>
           </div>
         </Reveal>
       </section>
 
-      <div style={{borderTop: `1px solid ${c.line}`, padding: isMobile ? '20px 24px' : '24px 56px', display:'flex', justifyContent:'space-between', alignItems:'center', fontSize: 13, color: c.faint, fontWeight: 500, paddingBottom: isMobile ? 88 : undefined}}>
+      <div style={{borderTop: `1px solid ${c.line}`, padding: isMobile ? '20px 24px 112px' : '24px 56px 44px', display:'flex', justifyContent:'space-between', alignItems:'center', fontSize: 13, color: c.faint, fontWeight: 500}}>
         <span>© 2026 {D.PERSON.nameKo}</span>
         <span>v.2026.05</span>
       </div>
 
-      {/* mobile sticky CTA — Email · Resume */}
+      {/* mobile sticky CTA — Email · Naver */}
       {isMobile && (
         <div style={{
           position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
@@ -569,12 +637,12 @@ const PortfolioWarm = ({ palette = 'ivoryCoral' }) => {
           display: 'flex', gap: 8,
           paddingBottom: 'calc(10px + env(safe-area-inset-bottom))',
         }}>
-          <a href={`mailto:${D.PERSON.email}`} style={{
+          <a href={emailHref} onClick={guardPlaceholderLink} style={{
             ...cta, flex: 1, justifyContent: 'center', textDecoration: 'none', padding: '12px 16px',
           }}>Email →</a>
-          <a href="#" onClick={(e) => e.preventDefault()} style={{
+          <a href="https://in.naver.com/gorgeous" target="_blank" rel="noopener noreferrer" style={{
             ...ctaGhost, flex: 1, justifyContent: 'center', textDecoration: 'none', padding: '12px 16px',
-          }}>Resume ↓</a>
+          }}>Naver →</a>
         </div>
       )}
 
@@ -751,14 +819,14 @@ function CaseStrip({ c, isMobile, wrap }) {
   );
 }
 
-// Numeric metric parser — handles "+24%", "−12%", "1.8x", "34.5%"
+// Numeric metric parser — handles signed percentages, multipliers, and plain labels.
 function _parseMetric(s) {
   const str = String(s);
   const m = str.match(/^([+\-−])?\s*(\d+(?:\.\d+)?)(.*)$/);
-  if (!m) return { num: 0, sign: '', rest: str, dec: 0 };
+  if (!m) return { num: 0, sign: '', rest: str, dec: 0, raw: str };
   const numStr = m[2];
   const dec = numStr.includes('.') ? numStr.split('.')[1].length : 0;
-  return { num: parseFloat(numStr), sign: m[1] || '', rest: m[3] || '', dec };
+  return { num: parseFloat(numStr), sign: m[1] || '', rest: m[3] || '', dec, raw: null };
 }
 
 // Animates between Before and After when showAfter changes.
@@ -817,6 +885,7 @@ function CountValue({ value, active, playKey = 0, duration = 1100 }) {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [active, playKey, v.num, duration]);
+  if (v.raw) return <>{v.raw}</>;
   const displaySign = v.sign === '+' ? '+' : (v.sign === '-' || v.sign === '−') ? '−' : '';
   return <>{displaySign}{Math.abs(n).toFixed(v.dec)}{v.rest}</>;
 }
@@ -850,12 +919,15 @@ function CaseCard({ c, project, index, isMobile }) {
 
   const onToggle = (v) => { userTouchedRef.current = true; setShowAfter(v); };
 
-  const baData = [
-    { before: { copy: '오랜만이에요! 지금 전 상품 20% 할인 중이에요.', open: '12.4%', ctr: '1.1%' }, after: { copy: '요즘 어떻게 지내세요? 마지막에 보신 ○○ 카테고리에 새 컬렉션이 들어왔어요.', open: '24.6%', ctr: '3.4%' } },
-    { before: { copy: '회원가입을 환영합니다! 첫 구매 5,000원 쿠폰을 드려요.', open: '18.2%', ctr: '2.0%' }, after: { copy: '가입 때 살펴보신 카테고리에 마침 어울릴 만한 게 들어왔어요.', open: '34.5%', ctr: '5.6%' } },
-    { before: { copy: 'VIP 고객님께 드리는 이번 달 특별 혜택을 확인하세요.', open: '21.0%', ctr: '1.8%' }, after: { copy: '이번 달 당신의 취향 노트입니다. 평소 보시던 톤에 가까운 4가지를 골라봤어요.', open: '38.1%', ctr: '6.4%' } },
-  ];
-  const ba = baData[index] || baData[0];
+  const ba = project.compare || {
+    title: 'Before / After',
+    summary: { value: 'Review', label: '성과 확인', caption: '발송 후 리포트 기준' },
+    beforeLabel: 'Before',
+    afterLabel: 'After',
+    before: { copy: project.problem, primary: 'Before', secondary: '기준' },
+    after: { copy: project.learn, primary: 'After', secondary: '결과' },
+    note: '',
+  };
   const cur = showAfter ? ba.after : ba.before;
 
   return (
@@ -880,123 +952,77 @@ function CaseCard({ c, project, index, isMobile }) {
         <PhoneScreenshot c={c} project={project} index={index} message={cur.copy} />
       </div>
 
-      <div style={{padding: isMobile ? '24px 22px 28px' : '32px 32px 34px', display: 'flex', flexDirection: 'column', gap: 26}}>
+      <div style={{padding: isMobile ? '20px 20px 22px' : '24px 26px 26px', display: 'flex', flexDirection: 'column', gap: 16}}>
         {/* meta header — slim, role + segment as captions; channel chips removed */}
         <div>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12, gap: 12}}>
-            <span style={{fontSize: 12, fontWeight: 700, color: c.faint, letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace"}}>
+            <span style={{fontSize: 11.5, fontWeight: 700, color: c.faint, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace", maxWidth: '70%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
               {project.cat} · 0{index+1}
             </span>
             <span style={{fontSize: 11.5, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', whiteSpace: 'nowrap'}}>
-              {project.period}
+              {project.period.replace(' · 2025 — 현재', '')}
             </span>
           </div>
           <h3 style={{fontSize: isMobile ? 19 : 22, fontWeight: 700, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.32}}>
             {project.title}
           </h3>
-          <div style={{fontSize: 14, color: c.mute, marginTop: 12, lineHeight: 1.55}}>
+          <div style={{
+            fontSize: 13.5, color: c.mute, marginTop: 10, lineHeight: 1.55,
+            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}>
             {project.role}
           </div>
-          <div style={{fontSize: 12, color: c.faint, marginTop: 6, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>
+          <div style={{fontSize: 11.5, color: c.faint, marginTop: 6, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
             {project.segment}
           </div>
         </div>
 
-        {/* message rewrite — sliding pill toggle + sliding metric panels */}
-        <div style={{borderTop: `1px solid ${c.line}`, paddingTop: 22}}>
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, gap: 8}}>
-            <span style={{fontSize: 11.5, fontWeight: 700, color: c.ink, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace"}}>Message rewrite</span>
-
-            {/* segmented control with sliding indicator */}
-            <div style={{display: 'inline-flex', borderRadius: 999, background: c.bg, border: `1px solid ${c.line}`, padding: 3, position: 'relative'}}>
-              <div aria-hidden="true" style={{
-                position: 'absolute', top: 3, bottom: 3,
-                left: 3, width: 'calc(50% - 3px)',
-                background: c.ink, borderRadius: 999,
-                transform: showAfter ? 'translateX(100%)' : 'translateX(0%)',
-                transition: 'transform .42s cubic-bezier(0.65, 0, 0.35, 1)',
-              }} />
-              {[['Before', false], ['After', true]].map(([l, v]) => (
-                <button key={l} onClick={() => onToggle(v)} style={{
-                  padding: '5px 18px', fontSize: 12, borderRadius: 999, border: 'none', cursor: 'pointer',
-                  background: 'transparent', color: showAfter === v ? c.bg : c.mute,
-                  fontWeight: 500, fontFamily: 'inherit',
-                  position: 'relative', zIndex: 1,
-                  transition: 'color .35s ease',
-                  minWidth: 64,
-                }}>{l}</button>
-              ))}
-            </div>
+        {/* performance summary */}
+        <div style={{borderTop: `1px solid ${c.line}`, paddingTop: 16}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: 12, gap: 8}}>
+            <span style={{fontSize: 11.5, fontWeight: 700, color: c.ink, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace"}}>{ba.title}</span>
           </div>
 
-          {/* sliding panel — Before / After horizontally; whole content slides */}
-          <div style={{overflow: 'hidden', borderRadius: 4}}>
-            <div style={{
-              display: 'flex', width: '200%',
-              transform: `translateX(${showAfter ? '-50%' : '0%'})`,
-              transition: 'transform .55s cubic-bezier(0.65, 0, 0.35, 1)',
-            }}>
-              {/* Before panel */}
-              <div style={{flex: '0 0 50%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, paddingRight: 6}}>
-                {[['Open rate', ba.before.open], ['CTR', ba.before.ctr]].map(([label, value]) => (
-                  <div key={label} style={{padding: '14px 16px', background: c.bg, borderRadius: 4}}>
-                    <div style={{fontSize: 11, color: c.faint, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase'}}>{label}</div>
-                    <div style={{fontSize: 21, fontWeight: 700, color: c.ink, marginTop: 6, letterSpacing: '-0.02em'}}>{value}</div>
-                    <div style={{fontSize: 11, marginTop: 4, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em', visibility: 'hidden'}}>—</div>
-                  </div>
-                ))}
-              </div>
-              {/* After panel */}
-              <div style={{flex: '0 0 50%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, paddingLeft: 6}}>
-                {[
-                  ['Open rate', ba.after.open, ba.before.open],
-                  ['CTR', ba.after.ctr, ba.before.ctr],
-                ].map(([label, value, beforeVal]) => (
-                  <div key={label} style={{padding: '14px 16px', background: c.bg, borderRadius: 4}}>
-                    <div style={{fontSize: 11, color: c.faint, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase'}}>{label}</div>
-                    <div style={{fontSize: 21, fontWeight: 700, color: c.accent, marginTop: 6, letterSpacing: '-0.02em'}}>{value}</div>
-                    <div style={{fontSize: 11, color: c.faint, marginTop: 4, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>↑ vs Before {beforeVal}</div>
-                  </div>
-                ))}
-              </div>
+          <div style={{
+            background: c.bg,
+            border: `1px solid ${c.line}`,
+            borderRadius: 4,
+            padding: '16px 16px 14px',
+          }}>
+            <div style={{fontSize: 34, fontWeight: 800, color: c.accent, letterSpacing: '-0.04em', lineHeight: 1}}>
+              {ba.summary.value}
             </div>
-          </div>
-        </div>
-
-        {/* result — count-up on entry; per-metric baselines */}
-        <div style={{borderTop: `1px solid ${c.line}`, paddingTop: 22}}>
-          <div style={{fontSize: 11.5, fontWeight: 700, color: c.ink, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 16, fontFamily: "'IBM Plex Mono', monospace"}}>Result</div>
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)'}}>
-            {project.metrics.map((m, j) => (
-              <div key={j} style={{borderRight: j < 2 ? `1px solid ${c.line}` : 'none', paddingLeft: j > 0 ? 14 : 0, paddingRight: j < 2 ? 14 : 0}}>
-                <div style={{fontSize: 26, fontWeight: 700, color: c.ink, letterSpacing: '-0.025em', lineHeight: 1}}>
-                  <CountValue value={m.v} active={inView} playKey={playKey} duration={1100} />
-                </div>
-                <div style={{fontSize: 12.5, color: c.ink, marginTop: 10, fontWeight: 600, lineHeight: 1.3}}>{m.label}</div>
-                {m.base && (
-                  <div style={{fontSize: 11, color: c.faint, marginTop: 5, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>{m.base}</div>
-                )}
-              </div>
-            ))}
+            <div style={{fontSize: 13.5, color: c.ink, fontWeight: 700, marginTop: 8}}>
+              {ba.summary.label}
+            </div>
+            <div style={{fontSize: 12, color: c.faint, marginTop: 5, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>
+              {ba.summary.caption}
+            </div>
           </div>
         </div>
 
         {/* learning */}
-        <div style={{fontSize: 14, lineHeight: 1.7, color: c.mute, borderLeft: `2px solid ${c.accent}`, paddingLeft: 14}}>
+        <div style={{fontSize: 13, lineHeight: 1.55, color: c.mute, borderLeft: `2px solid ${c.accent}`, paddingLeft: 12}}>
           <span style={{color: c.ink, fontWeight: 600}}>Learning.</span> {project.learn}
+          {ba.note && (
+            <div style={{fontSize: 11.5, color: c.faint, marginTop: 8, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.02em'}}>{ba.note}</div>
+          )}
         </div>
       </div>
     </article>
   );
 }
 
-// Phone-frame screenshot — neutral, no per-card hue
+// Phone-frame screenshot — neutral, no per-card hue.
+// TODO: Replace this illustrated placeholder with anonymized screenshots under
+// /assets/portfolio once the final proof images are prepared.
 function PhoneScreenshot({ c, project, index, message }) {
   const channel = project.channels[0] || 'Kakao 알림톡';
-  const titles = ['카카오톡 알림톡', '신규 회원 안내', 'VIP · 취향 노트'];
+  const titles = ['Water Purifier CRM', 'Big Smile Day Push', 'Performance Tracking', 'CRM Monitoring Board'];
   return (
     <div style={{
-      width: 200, height: 360, borderRadius: 28,
+      width: 'min(300px, 100%)', aspectRatio: '300 / 460', borderRadius: 28,
       background: '#0e0c0a', padding: 7,
       boxShadow: '0 20px 50px -28px rgba(0,0,0,0.4)',
       position: 'relative',
@@ -1005,6 +1031,20 @@ function PhoneScreenshot({ c, project, index, message }) {
         width: '100%', height: '100%', borderRadius: 22, background: '#f7f4ef',
         overflow: 'hidden', position: 'relative',
       }}>
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              objectFit: 'cover',
+              objectPosition: 'top center',
+            }}
+          />
+        ) : (
+        <>
         <div style={{
           position: 'absolute', top: 6, left: '50%', transform: 'translateX(-50%)',
           width: 70, height: 16, borderRadius: 999, background: '#0e0c0a', zIndex: 2,
@@ -1037,6 +1077,8 @@ function PhoneScreenshot({ c, project, index, message }) {
             background: '#ece4d6', borderRadius: 999,
           }}>오후 2:14</div>
         </div>
+        </>
+        )}
       </div>
     </div>
   );
@@ -1181,6 +1223,9 @@ function AskSujeong({ c, isMobile, lang, t, qa, goTo }) {
     borderTopLeftRadius: 18, borderTopRightRadius: 18,
     zIndex: 70, display: 'flex', flexDirection: 'column',
     transform: open ? 'translateY(0)' : 'translateY(100%)',
+    opacity: open ? 1 : 0,
+    visibility: open ? 'visible' : 'hidden',
+    pointerEvents: open ? 'auto' : 'none',
     transition: 'transform .42s cubic-bezier(.2,.7,.2,1)',
     boxShadow: '0 -20px 60px -20px rgba(20,15,10,0.25)',
     paddingBottom: 'env(safe-area-inset-bottom)',

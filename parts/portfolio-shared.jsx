@@ -1,236 +1,398 @@
-// Shared sample data + small primitives both portfolio concepts use.
+// Shared portfolio data + small primitives both portfolio concepts use.
 
 const PERSON = {
   nameKo: '정수정',
   nameEn: 'Sujeong Jeong',
   role: 'CRM Marketer',
-  email: 'sujeong.jeong@example.com',
-  yearsExp: 5,
+  email: 'clearlcrystal@gmail.com',
+  yearsExp: null,
 };
 
 const CAREER = [
   {
-    period: '2023 — 현재',
-    company: '(주)리브앤룩 · Lifestyle Commerce',
-    role: 'CRM Marketer · Senior', // TODO: 실제 직함 확인 후 조정
+    period: '2025.06 — 현재',
+    company: '㈜지마켓',
+    role: 'CRM 마케터',
     meta: {
-      channels: '알림톡 · 이메일 · 푸시 · 친구톡',
-      scale: '월 40+ 캠페인 · VIP 12K',
-      tools: 'Braze · GA4 · SQL · Spreadsheet',
+      channels: 'App Push · KakaoTalk Plus Friend · LMS · DM Email',
+      scale: '단일 앱푸시 캠페인 발송 규모: 150만+ · 발송 후 CTR/CVR/GMV 추적',
+      tools: '사내 CRM 운영 시스템 · Spreadsheet / Excel · Photoshop / Illustrator',
     },
     bullets: [
-      '월 40+ 캠페인 운영 · 라이프사이클 시퀀스 4종 설계',
-      'VIP 12,400명 대상 1:1 큐레이션 운영 · 12M 잔존 +22%',
-      '재구매 시퀀스 리뉴얼로 분기 GMV/발송 +18%',
+      'G마켓 앱푸시 광고 메시지 문구와 배너 메시지를 프로모션 성격, 타겟 조건, 상품 카테고리에 맞춰 기획 및 운영',
+      '카카오톡 플러스친구 와이드형, 리스트형, 캐러셀형 메시지의 제목·본문·버튼 CTA 구조 설계',
+      'LMS와 DM 이메일 캠페인의 문구 등록, 파라미터 입력, 발송 시간 지정, 타겟 조건 확인, 최종 발행 관리',
+      '오탈자, 링크, 랜딩 페이지, 트래킹 파라미터, 소재 일치 여부를 발송 전 체크리스트 기준으로 검수',
+      '도달률, CTR, CVR, 바이어, GMV 등 성과 지표를 확인하고 캠페인 리포트와 다음 운영 포인트로 정리',
+      '광고주, 대행사, 내부 영업 조직과 일정, 소재, 수정 사항, 성과 기준을 맞추며 발송 품질 관리',
     ],
   },
   {
-    period: '2021 — 2023',
-    company: '(주)포레스트 · Beauty D2C',
-    role: 'CRM Marketer',
+    period: '2022.01 — 2023.09',
+    company: '강동구청 도시경관과',
+    role: '홍보 / 문화사업 운영',
     meta: {
-      channels: '카카오 알림톡 · 친구톡 · Email',
-      scale: '월 25+ 캠페인 · 회원 320K',
-      tools: 'CleverTap · Bizm · Amplitude · SQL',
+      channels: 'SNS · Local Campaign · Offline Program · Public Communication',
+      scale: '강풀만화거리 문화거리 조성 프로젝트',
+      tools: 'Instagram · Facebook · 촬영/편집 도구 · Spreadsheet / Excel',
     },
     bullets: [
-      '신규 회원 온보딩 시퀀스 0→1 구축 · D14 첫구매 +31%',
-      'SQL 세그먼트 운영 체계 도입 · 분기 캠페인 수 2.4배',
-      '카카오 알림톡/친구톡 카피 가이드 정리 및 사내 표준화',
+      '강동구 특화사업 강풀만화거리 문화거리 조성 프로젝트 운영 지원 및 홍보',
+      '유관기관, 참여 작가, 지역 커뮤니티와 협업하며 사업 일정과 행사 운영 실무 지원',
+      '인스타그램과 페이스북 채널의 주요 사업 홍보 콘텐츠 기획, 촬영, 편집, 운영',
+      '문화 프로그램 참여자 모집 전략 수립, 포스터·보도자료 등 홍보물 제작, 결과 리포트 작성',
+      '방문자 수 전년 대비 60% 이상 증가 성과를 바탕으로 온·오프라인 홍보 효과 확인',
     ],
   },
   {
-    period: '2020 — 2021',
-    company: '(주)디어메이트 · Subscription',
-    role: 'Marketing Associate',
+    period: '2023.03 — 2024.08',
+    company: '천하일미',
+    role: '브랜드 / 콘텐츠 활동',
     meta: {
-      channels: 'Email · App Push',
-      scale: '월 12+ 캠페인',
-      tools: 'Stibee · Spreadsheet · GA',
+      channels: 'SNS · Review Content · Short-form · Product Story',
+      scale: '제품 리뷰 및 홍보 콘텐츠 제작',
+      tools: '촬영/편집 도구 · Photoshop / Illustrator · CapCut',
     },
     bullets: [
-      '이메일/푸시 발송 운영 및 결과 리포트 주간 업무',
-      'A/B 테스트 5회 진행 · 평균 Open rate +9%p',
+      '제품 마케팅 콘텐츠와 SNS 홍보 콘텐츠 기획',
+      '신제품 및 기존 제품 시식 기반 리뷰 콘텐츠 제작',
+      '제품 홍보 영상 촬영, 편집, 숏폼 콘텐츠 제작',
+      '제품의 강점과 소비자 반응 포인트를 콘텐츠 구조로 정리',
     ],
   },
   {
-    period: '2019',
-    company: '국민대학교 시각디자인학과 졸업',
-    role: 'B.A. Visual Communication Design',
-    meta: null,
-    bullets: [],
+    period: '2023.07 — 2024.06',
+    company: '카페베네 홍보 서포터즈',
+    role: '블로그 / 브랜드 콘텐츠',
+    meta: {
+      channels: 'Naver Blog · Brand News · Review Content',
+      scale: '신메뉴 리뷰 및 브랜드 소식 홍보',
+      tools: 'Naver Blog · 촬영/편집 도구 · Spreadsheet / Excel',
+    },
+    bullets: [
+      '블로그 기반 브랜드 소식 홍보와 신메뉴 리뷰형 콘텐츠 제작',
+      '검색 노출과 유입을 고려한 제목, 썸네일, 본문 구조 기획',
+      '맛 평가, 이미지 구성, 영상 촬영 및 편집을 포함한 콘텐츠 운영',
+    ],
+  },
+  {
+    period: 'Ongoing',
+    company: '네이버 푸드 인플루언서 / 블로그',
+    role: 'SEO Content Marketing',
+    meta: {
+      channels: 'Naver Blog · SEO Content · Review Content · Branded Content',
+      scale: '콘텐츠 1,000+ · 팬 4,843 · 이웃 5,150',
+      tools: 'Naver Blog · Keyword Research · Thumbnail · Photo / Video Editing',
+    },
+    bullets: [
+      '네이버 푸드 인플루언서 활동을 통해 검색 의도, 제목 후킹, 썸네일 구성, 콘텐츠 체류 흐름을 실험',
+      '블로그, 리뷰, 브랜디드 콘텐츠를 제작하며 소비자 반응과 유입 구조를 확인',
+      '콘텐츠 경험을 CRM 메시지의 클릭 이유, 상품 장점 정리, 고객 언어 선택으로 연결',
+    ],
+  },
+];
+
+const EDUCATION = [
+  {
+    period: '2024.01 — 2024.02',
+    title: 'GTQ 그래픽 전문가 과정',
+    org: '진주직업전문학교',
+    details: [
+      'Photoshop, Illustrator 실무 교육',
+      '사진 편집, 합성, 이미지 보정 기초',
+      '포스터, CI, 편집, 웹, 캐릭터 디자인 제작 실습',
+      '140시간 실무 교육 이수',
+    ],
+  },
+  {
+    period: '2023.09',
+    title: '디지털마케팅 직무교육',
+    org: '에이블런',
+    details: [
+      '디지털 마케팅 및 퍼포먼스 전략 수립',
+      '광고 소재 기획과 콘텐츠 제작 실습',
+      '검색/SNS 광고 등 채널별 마케팅 툴 이해',
+      '데이터 기반 타깃 설정과 성과 개선 실습',
+      '100시간 교육 이수',
+    ],
   },
 ];
 
 const HERO_COPY = {
-  eyebrow: 'CRM · Lifecycle · Retention',
-  // chosen final headline (also surfaced as Tweak option)
-  headlineKo: '고객의 하루에 스며드는 메시지를 설계합니다.',
-  headlineEn: 'Designing messages that belong in a customer\u2019s day.',
-  sub: '감으로 보내지 않습니다. 세그먼트, 맥락, 카피, 성과까지 — 한 줄의 메시지 뒤에 있는 모든 것을 함께 다룹니다.',
+  eyebrow: 'CRM · Campaign Operation · Performance',
+  headlineKo: '고객의 하루에 스며드는 메시지를 설계합니다',
+  headlineEn: 'Designing messages that belong in a customer\u2019s day',
+  sub: '감으로 보내지 않습니다. 브랜드의 톤, 고객의 맥락, 세그먼트와 성과 데이터를 함께 읽고 한 줄의 메시지가 행동으로 이어지도록 설계합니다.',
   competencies: [
-    { k: 'Segment', v: '쿼리 설계 · 행동 기반 타깃팅' },
-    { k: 'Message', v: '카카오/이메일/푸시 카피' },
-    { k: 'Insight', v: '성과 리포트 · 개선 루프' },
+    { k: 'Segment', v: '고객 맥락과 타겟 조건을 먼저 정의합니다.' },
+    { k: 'Message', v: '브랜드 톤과 행동 유도 구조를 함께 설계합니다.' },
+    { k: 'Insight', v: '발송 후 성과를 확인하고 다음 캠페인에 반영합니다.' },
   ],
   stats: [
-    { v: 142, suffix: '+', label: 'CRM Campaigns' },
-    { v: 38, suffix: '%', label: 'Avg. Open Lift' },
-    { v: 24, suffix: '%', label: 'Reactivation' },
+    { text: '4', unit: 'Channels', label: 'CRM 운영 채널', sub: 'App Push · KakaoTalk · LMS · DM Email' },
+    { text: '150만+', unit: 'App Push', label: '단일 캠페인 발송 규모', sub: '대규모 타겟 세팅 · QA · 발송 후 리포트 확인' },
+    { text: '3+', unit: 'KPI', label: '주요 성과 관리 지표', sub: 'CTR · CVR · GMV · 도달률 · 바이어' },
+    { text: '1,000+', unit: 'Contents', label: '네이버 인플루언서 콘텐츠 경험', sub: '팬 4,843 · 이웃 5,150 · SEO 콘텐츠 제작' },
   ],
 };
 
 const ABOUT_PARAGRAPHS = [
-  '저는 CRM을 ‘발송 업무’가 아니라 고객 경험을 설계하는 일이라고 생각합니다. 같은 쿠폰이라도 누구에게, 언제, 어떤 문장으로 도착하는지에 따라 의미가 달라지니까요.',
-  '데이터로 가설을 세우고, 문장으로 그 가설을 전합니다. 보낸 다음에는 반드시 돌아와서 무엇이 통했고 무엇이 통하지 않았는지 정리합니다. 그렇게 한 번의 캠페인이 다음 캠페인의 출발선이 됩니다.',
+  '저는 CRM을 발송 업무가 아니라 설계 업무라고 믿습니다. 누가, 어떤 상황에서, 왜 이 메시지를 받아야 하는지를 먼저 정의해야 같은 혜택도 행동으로 이어질 수 있습니다.',
+  '문구, 타겟, 발송 시간, 랜딩 링크, 파라미터와 성과 지표까지 한 번에 보며 캠페인을 운영합니다. 발송 후에는 CTR·CVR·GMV와 세그먼트별 반응을 정리해 다음 캠페인의 기준으로 남깁니다.',
 ];
 
 const SERVICES = [
-  { k: '01', t: 'CRM Campaign Planning', d: '비즈니스 목표 → 가설 → 세그먼트 → 메시지 → 성과 지표까지 한 흐름으로 설계합니다.' },
-  { k: '02', t: 'Customer Segmentation', d: 'RFM, 행동 이벤트, 라이프사이클 단계를 조합한 쿼리 기반 세그먼트를 운영합니다.' },
-  { k: '03', t: 'Message Strategy', d: '카카오 알림톡·친구톡, 이메일, 앱 푸시 채널별 톤과 길이를 다르게 설계합니다.' },
-  { k: '04', t: 'Reporting & Insight', d: 'Open · Click · Conversion · Reactivation을 캠페인 단위/주차 단위로 리포트하고 개선 포인트를 정리합니다.' },
-  { k: '05', t: 'Cross-team Collaboration', d: '디자인·개발·CS·영업과 함께 메시지의 맥락과 운영 가능성을 맞춥니다.' },
+  { k: '01', t: 'Campaign Context', d: '캠페인의 목적, 브랜드 톤, 상품 특성, 고객 상황을 먼저 정리합니다.' },
+  { k: '02', t: 'Message Design', d: '제목·본문·CTA·버튼 구조를 채널과 세그먼트에 맞게 설계합니다.' },
+  { k: '03', t: 'Setup & QA', d: '파라미터, 타겟 조건, 발송 시간, 링크·랜딩, 소재를 체크리스트 기반으로 검수합니다.' },
+  { k: '04', t: 'Performance Review', d: 'CTR·CVR·GMV·도달률·바이어 지표를 확인하고 리포트와 인사이트로 정리합니다.' },
+  { k: '05', t: 'Benchmarking', d: '경쟁사와 타 브랜드 CRM 메시지를 모니터링해 문구와 CTA 패턴을 축적합니다.' },
 ];
 
 const PROJECTS = [
   {
     id: 'p1',
-    cat: 'Reactivation',
-    period: '2024 Q3 · 4w',
-    role: 'Lead · 시퀀스 설계 + 카피 + 운영',
-    title: '슬리퍼 고객을 깨우는 7일 리텐션 시퀀스',
-    problem: '최근 60일 무구매 회원의 재구매 전환이 분기별로 하락 중',
-    segment: 'Last purchase 60–120d · 평균 LTV 상위 40%',
+    image: 'assets/01_brand_crm.png',
+    cat: 'Brand CRM · Targeting',
+    period: 'Gmarket · 2025 — 현재',
+    role: '기존 남성 중심 타겟을 여성 35~59세로 전환 제안해 동일 모수 기준 매출 2배를 확인했습니다.',
+    title: '정수기 브랜드 타겟 전환 CRM 메시지 개선',
+    problem: '기존 남성 중심 타겟과 푸른색 배너 톤을 재검토하고, 실제 구매 가능성이 높은 여성 타겟 중심으로 메시지 방향을 바꿨습니다.',
+    segment: '정수기 브랜드 · 여성 35~59세 · 동일 모수 매출 비교',
     actions: [
-      '7일 4단계 시퀀스 설계 (앱푸시 → 알림톡 → 이메일 → 친구톡)',
-      '구매 카테고리 기반 동적 추천 블록 적용',
-      '쿠폰 노출은 시퀀스 후반에만 노출하여 마진 보호',
+      '여성 35~59세 타겟 제안',
+      '타겟에 맞춘 배너 톤앤매너와 CTA 구조 조정',
+      '동일 모수 기준 매출 성과 비교',
+      '이후 분홍 테마 홍보 확장 흐름 확인',
     ],
-    channels: ['App Push', '알림톡', 'Email', '친구톡'],
-    baseline: '60–120d 무구매 세그 · vs control group',
+    compare: {
+      title: 'Sales Impact',
+      summary: {
+        value: '200%+',
+        label: '동일 모수 대비 매출 증가',
+        caption: '여성 35~59세 타겟 전환 후',
+      },
+      before: { copy: '남성 중심 타겟 · 푸른색 배너 톤', primary: '1.0x', secondary: '기존 매출' },
+      after: { copy: '여성 35~59세 타겟 · 부드러운 배너 톤', primary: '2.0x', secondary: '동일 모수 매출' },
+      note: '이후 분홍 테마 홍보로 확장되었습니다.',
+    },
+    channels: ['KakaoTalk Plus Friend', 'Brand Message', 'Target Proposal'],
+    baseline: '브랜드별 메시지 방향 제안',
     metrics: [
-      { v: '+24%', label: 'Reactivation', base: 'vs control' },
-      { v: '+18%', label: 'GMV / 발송', base: 'vs prev quarter' },
-      { v: '−12%', label: 'Unsubscribe', base: 'vs prev quarter' },
+      { v: '타겟 제안', label: 'Target', base: '연령층/고객층 기준' },
+      { v: '톤 설계', label: 'Message', base: '브랜드 톤앤매너' },
+      { v: '소재 검수', label: 'Creative', base: '배너/CTA 구조' },
     ],
-    learn: '쿠폰을 먼저 던지지 않는 시퀀스가 마진과 재구매를 동시에 끌어올렸습니다. 메시지 순서가 곧 전략이라는 걸 배웠어요.',
+    learn: '타겟을 재정의하자 배너 방향과 성과 기준이 더 명확해졌습니다.',
   },
   {
     id: 'p2',
-    cat: 'Onboarding',
-    period: '2024 Q1 · 6w',
-    role: 'Lead · 시퀀스 0→1 + 카피 분기 설계',
-    title: '첫 구매까지 3단계 — 신규 회원 온보딩 리뉴얼',
-    problem: '가입 후 14일 내 첫 구매율 정체, 이탈은 D+3에 집중',
-    segment: '가입 후 0–14d · 첫 구매 전 회원',
+    image: 'assets/02_promotion.png',
+    cat: 'Big Promotion · App Push',
+    period: 'Gmarket · 2025 — 현재',
+    role: '빅스마일데이 등 대형 프로모션에서 앱푸시 발송 세팅, 타겟 조건, 발송 시간, QA를 관리했습니다.',
+    title: '빅스마일데이 CRM 발송 운영',
+    problem: '대형 프로모션은 발송 규모와 일정 변수가 큽니다. 타겟, 링크, 랜딩, 파라미터를 사전에 맞춰 발송 품질을 관리했습니다.',
+    segment: '빅스마일데이 · 대규모 타겟 · 앱푸시 · 발송 QA',
     actions: [
-      '가입 직후 / D+1 / D+3 세 시점의 트리거 설계',
-      '카테고리 관심사 기반 카피 분기 (3 variants)',
-      'D+3 미반응자에게만 친구톡 후속 발송',
+      '행사 목적, 발송 일정, 타겟 조건, 랜딩 흐름 확인',
+      '앱푸시 문구와 배너 메시지를 프로모션 맥락에 맞춰 정리',
+      '파라미터, 링크, 랜딩 페이지, 발송 시간, 대상 조건 사전 검수',
+      '최대 150만+ 규모 앱푸시 발송 후 리포트 확인',
     ],
-    channels: ['Email', 'App Push', '친구톡'],
-    baseline: '신규 회원 0–14d · vs prev onboarding',
+    compare: {
+      title: 'GMV Scale',
+      summary: {
+        value: '150만+',
+        label: '단일 앱푸시 발송 규모',
+        caption: '빅스마일데이 발송 세팅 · QA · 리포트 확인',
+      },
+      beforeLabel: 'Before',
+      afterLabel: 'Big Smile Day',
+      before: { copy: '일반 프로모션 캠페인 기준', primary: '[기준 GMV]', secondary: '[기준 구매자]' },
+      after: { copy: '빅스마일데이 대형 행사 발송 기준', primary: '[행사 GMV]', secondary: '[행사 구매자]' },
+      note: '매출 규모는 공개 가능한 범위로 익명화해 입력합니다.',
+    },
+    channels: ['App Push', 'Big Promotion', 'QA Checklist'],
+    baseline: '대규모 발송 운영 안정성',
     metrics: [
-      { v: '+31%', label: 'D14 First Purchase', base: 'vs prev onboarding' },
-      { v: '+42%', label: 'Open Rate', base: 'vs prev avg' },
-      { v: '+1.8x', label: 'CTR', base: 'vs control variant' },
+      { v: '150만+', label: 'Scale', base: '단일 앱푸시 발송' },
+      { v: 'QA 관리', label: 'Quality', base: '링크/랜딩/파라미터' },
+      { v: '리포트 확인', label: 'Follow-up', base: '발송 후 결과 확인' },
     ],
-    learn: '"환영합니다"보다 "당신이 본 카테고리에 새 상품이 들어왔어요"가 훨씬 잘 열렸습니다. 맥락이 곧 카피였어요.',
+    learn: '대규모 발송은 문구보다 세팅 정확도와 사전 QA가 먼저 무너지면 안 됩니다.',
   },
   {
     id: 'p3',
-    cat: 'Retention',
-    period: '2023 Q4 — 2024 Q2 · 9mo',
-    role: 'Owner · 큐레이션 + 회신 직접 운영',
-    title: 'VIP 고객 케어 — 분기 단위 1:1 큐레이션 메시지',
-    problem: 'VIP 등급 회원의 1년 잔존이 일반 등급 대비 큰 차이 없음',
-    segment: 'VIP 등급 · 최근 90일 활동 있음 · 약 12,400명',
+    image: 'assets/03_insight.png',
+    cat: 'Performance · Insight',
+    period: 'Gmarket · 2025 — 현재',
+    role: '발송 후 CTR, CVR, GMV 등 성과를 추적하고 캠페인별 반응 차이를 다음 운영 기준으로 정리했습니다.',
+    title: 'CRM 캠페인 실적 추적 및 관리',
+    problem: '캠페인은 발송 후 지표를 확인해야 다음 메시지의 기준이 생깁니다. 채널, 타겟 방식, 메시지 구조별 반응을 비교해 개선 포인트를 정리했습니다.',
+    segment: '성과 리포트 · CTR/CVR/GMV · 캠페인별 반응 비교',
     actions: [
-      '구매 카테고리·시즌·요일 패턴을 조합한 1:1 큐레이션',
-      '판매 컨텍스트가 아닌 "당신의 취향 노트" 톤으로 카피 통일',
-      '응답·답장 회신을 직접 운영하며 인사이트 수집',
+      '발송 후 CTR, CVR, GMV, 도달률, 바이어 등 주요 지표 확인',
+      '캠페인 유형별 클릭 반응과 구매 성과 비교',
+      '성과 리포트와 구조 변경 참고본을 익명화/모자이크 가능한 형태로 정리',
+      '다음 캠페인에서 조정할 메시지 구조와 운영 포인트 도출',
     ],
-    channels: ['Email', '친구톡'],
-    baseline: 'VIP 12.4K · vs prev VIP CRM cohort',
+    compare: {
+      title: 'Performance Signal',
+      summary: {
+        value: '2.7x',
+        label: '대표 캠페인 CTR 차이',
+        caption: 'Audience 대비 Scenario 클릭 반응',
+      },
+      beforeLabel: 'Audience',
+      afterLabel: 'Scenario',
+      before: { copy: 'Audience 캠페인 기준 CTR', primary: '1.0x', secondary: 'CTR 기준' },
+      after: { copy: 'Scenario 캠페인 CTR', primary: '2.7x', secondary: 'Audience 대비' },
+      note: '대표 사례로 Scenario 캠페인의 CTR이 Audience 대비 2.7배 높았습니다.',
+    },
+    channels: ['Performance Report', 'Message Structure', 'Insight'],
+    baseline: '성과 추적 기반 개선 루프',
     metrics: [
-      { v: '+22%', label: '12M 잔존', base: 'vs prev VIP cohort' },
-      { v: '+33%', label: 'VIP NPS', base: 'vs prev quarter' },
-      { v: '6.4%', label: '회신율', base: 'industry CRM 평균 1–2%' },
+      { v: 'CTR/CVR', label: 'Click / Conversion', base: '문구·랜딩 반응' },
+      { v: 'GMV/바이어', label: 'Purchase', base: '구매 성과 확인' },
+      { v: '구조 개선', label: 'Learning', base: '다음 캠페인 반영' },
     ],
-    learn: '"팔지 않는 메시지"가 가장 잘 팔렸습니다. VIP에게 필요한 건 혜택 알림이 아니라 자기 취향을 정리해주는 사람이었어요.',
+    learn: '성과 추적은 단순 보고가 아니라 다음 캠페인의 타겟, 문구, 발송 기준을 조정하는 근거가 됩니다.',
+  },
+  {
+    id: 'p4',
+    image: 'assets/04_monotoring.png',
+    cat: 'Benchmarking · Insight · CRM Pattern',
+    period: 'Ongoing',
+    role: '여러 브랜드의 CRM 메시지를 직접 구독하며 메시지 구조, 혜택 표현, CTA, 세그먼트 방식을 비교했습니다.',
+    title: 'CRM 메시지 모니터링 & 인사이트 정리',
+    problem: '좋은 CRM 메시지는 꾸준한 관찰에서 나옵니다. 타 브랜드의 혜택 표현, CTA, 톤을 비교해 메시지 가설로 정리했습니다.',
+    segment: '다이소 · 롯데마트 · 테무 · 롯데리아 등 구독 메시지',
+    actions: [
+      '플러스친구, 알림톡, 앱푸시를 직접 구독하며 메시지 수집',
+      '혜택 표현, 제목 구조, CTA, 이미지 사용 방식 비교',
+      '연령/성별/관심사별 문구 톤과 행동 유도 방식 관찰',
+      '자사 캠페인에 적용 가능한 패턴과 가설로 정리',
+    ],
+    compare: {
+      title: 'Reference Board',
+      summary: {
+        value: '4+',
+        label: '브랜드 CRM 메시지 비교',
+        caption: '혜택 표현 · CTA · 톤앤매너 패턴 정리',
+      },
+      beforeLabel: 'Before',
+      afterLabel: 'After',
+      before: { copy: '브랜드별 메시지를 개별 캡처로만 확인', primary: '수집', secondary: '개별 메시지' },
+      after: { copy: '혜택 표현, CTA, 톤을 비교 가능한 보드로 정리', primary: '정리', secondary: '패턴/가설' },
+      note: '개인 수신 정보와 쿠폰번호는 블러 처리합니다.',
+    },
+    channels: ['Benchmarking', 'KakaoTalk', 'App Push'],
+    baseline: '브랜드별 CRM 패턴 비교',
+    metrics: [
+      { v: '브랜드 비교', label: 'Brands', base: '모니터링 대상' },
+      { v: '메시지 수집', label: 'Messages', base: '구독 메시지' },
+      { v: '가설 정리', label: 'Insights', base: '적용 가능 패턴' },
+    ],
+    learn: '레퍼런스를 많이 보는 것은 단순 참고가 아니라, 다음 메시지의 가설을 더 정교하게 만드는 과정입니다.',
   },
 ];
 
 const ROUTINE = [
   {
     k: 'Plan', t: '맥락을 먼저 본다',
-    d: '문제·세그먼트·가설·성공 지표를 한 페이지로 정리합니다. 메시지를 쓰기 전에 "왜 지금, 왜 이 사람에게"를 답합니다.',
-    sub: ['문제 정의 + 가설 노트', '타깃 세그먼트 설계 (SQL)', 'KPI · control 기준값 정의'],
-    artifact: '1-pager 가설 노트',
+    d: '문제, 고객, 브랜드, 성공 지표를 먼저 정리합니다. 메시지를 쓰기 전에 누구에게, 왜 지금, 어떤 행동을 기대하는지 정의합니다.',
+    sub: ['캠페인 목적 확인', '브랜드 톤앤매너 확인', '타겟/세그먼트 조건 확인', '주요 KPI 정의', '고객 행동 흐름 가설 수립'],
+    artifact: '캠페인 브리프',
   },
   {
     k: 'Do', t: '쓰고, 검수하고, 보낸다',
-    d: '카피 → 변수 점검 → 발송 시각 검증 → 운영팀 컨펌 → 발송. 체크리스트로 사람의 실수를 줄입니다.',
-    sub: ['메시지·채널 매칭', '변수 + 발송 시각 검증', '운영 리스크 점검'],
-    artifact: '발송 체크리스트',
+    d: '카피를 쓰고, 소재를 점검하고, 발송 시각과 조건을 확인합니다. 발송 전 체크리스트로 오탈자, 링크, 랜딩, 파라미터, 타겟 조건을 확인합니다.',
+    sub: ['메시지/CTA 작성', '이미지 및 소재 검수', '링크/랜딩 확인', '파라미터 확인', '발송 시간 및 대상 확인', '최종 발행'],
+    artifact: 'QA 체크리스트',
   },
   {
     k: 'Check', t: '데이터로 다시 본다',
-    d: 'Open · CTR · 전환 · 이탈 · 응답을 24h / 7d 시점으로 비교합니다. 가설이 맞았는지부터 확인합니다.',
-    sub: ['Open · CTR · CVR · Unsub', '24h vs 7d 시점 비교', '세그먼트별 반응 차이'],
-    artifact: '24h / 7d 리포트',
+    d: '오픈, 클릭, 전환, 이탈, 응답률을 기준으로 캠페인 결과를 확인합니다. 가설이 맞았는지, 어떤 타겟과 문구에서 반응이 달랐는지 비교합니다.',
+    sub: ['도달률 확인', 'CTR 확인', 'CVR 확인', 'GMV/바이어 확인', '세그먼트별 반응 비교', '발송 시간별 반응 확인'],
+    artifact: '성과 리포트',
   },
   {
     k: 'Refine', t: '다음 한 줄로 옮긴다',
-    d: '잘된 메시지의 패턴을 라이브러리에 기록하고, 다음 캠페인의 출발선으로 사용합니다.',
-    sub: ['Win pattern 라이브러리 기록', 'Fail 원인 정리', '다음 캠페인 입력값으로 전달'],
-    artifact: 'Win patterns Library',
+    d: '잘된 메시지의 패턴은 라이브러리에 남기고, 아쉬웠던 지점은 다음 캠페인의 가설로 바꿉니다.',
+    sub: ['Win pattern 정리', '실패 원인 기록', '레퍼런스 보드 업데이트', '다음 캠페인 인사이트 전달'],
+    artifact: '패턴 라이브러리',
   },
 ];
 
 // f: 3=Daily, 2=Weekly, 1=Occasional
 const SKILLS = [
   { g: 'CRM Operation', d: '캠페인 운영 · 채널 · 발송', items: [
-    { n: 'CRM 콘솔 운영', f: 3 },
-    { n: 'Braze · CleverTap', f: 2 },
-    { n: '카카오 알림톡 · 친구톡', f: 2 },
-    { n: 'Email · App Push', f: 2 },
-    { n: 'Bizm · Stibee', f: 2 },
-  ]},
-  { g: 'Data & Segmentation', d: '쿼리 설계 · 세그먼트 운영', items: [
-    { n: 'SQL · 세그먼트 쿼리', f: 3 },
-    { n: 'Spreadsheet pivot', f: 3 },
-    { n: 'GA4', f: 2 },
-    { n: 'Amplitude', f: 2 },
-    { n: 'Looker', f: 1 },
+    { n: 'App Push 운영', f: 3 },
+    { n: '카카오톡 플러스친구 운영', f: 3 },
+    { n: 'LMS / DM Email 운영', f: 3 },
+    { n: '발송 세팅 / 검수', f: 3 },
+    { n: '성과 리포트 관리', f: 3 },
+    { n: '사내 CRM 운영 시스템', f: 3 },
   ]},
   { g: 'Message & Creative', d: '카피 · 톤 · 소재', items: [
-    { n: 'Copywriting', f: 3 },
-    { n: 'Figma (시안 협업)', f: 1 },
-    { n: 'Photoshop (소재 수정)', f: 1 },
+    { n: 'CRM 카피라이팅', f: 3 },
+    { n: '제목/본문/CTA 구조 설계', f: 3 },
+    { n: '브랜드 톤앤매너 반영', f: 3 },
+    { n: '광고 소재 기획', f: 2 },
+    { n: '이미지 제작 요청 및 검수', f: 3 },
+    { n: 'Photoshop / Illustrator', f: 2 },
+    { n: 'CapCut / 숏폼 편집', f: 2 },
   ]},
-  { g: 'Reporting & Insight', d: '결과 · 패턴 · 학습', items: [
-    { n: '24h / 7d 리포트', f: 2 },
-    { n: 'Win Pattern Library', f: 2 },
-    { n: 'Sub-segment 분석', f: 2 },
+  { g: 'Data & Insight', d: '성과 · 세그먼트 · 개선', items: [
+    { n: 'CTR / CVR / GMV 분석', f: 3 },
+    { n: '도달률 / 바이어 지표 확인', f: 3 },
+    { n: '세그먼트별 반응 비교', f: 3 },
+    { n: '캠페인 리포트 정리', f: 3 },
+    { n: '경쟁사 CRM 메시지 모니터링', f: 2 },
+    { n: 'Spreadsheet / Excel', f: 3 },
   ]},
-  { g: 'Collaboration', d: '협업 · 문서 · 정렬', items: [
-    { n: 'Notion 문서화', f: 1 },
-    { n: 'Cross-team brief', f: 2 },
-    { n: 'CS · 영업 alignment', f: 2 },
+  { g: 'Content Marketing', d: 'SEO · 블로그 · 브랜디드 콘텐츠', items: [
+    { n: '네이버 인플루언서 운영', f: 2 },
+    { n: 'SEO 콘텐츠 기획', f: 2 },
+    { n: '리뷰형 콘텐츠 제작', f: 2 },
+    { n: '브랜디드 콘텐츠 제작', f: 2 },
+    { n: '촬영 / 편집 / 썸네일 구성', f: 2 },
+    { n: '숏폼 콘텐츠 제작', f: 2 },
+  ]},
+  { g: 'Collaboration', d: '협업 · 문서 · 커뮤니케이션', items: [
+    { n: '광고주 커뮤니케이션', f: 3 },
+    { n: '대행사 커뮤니케이션', f: 3 },
+    { n: '영업 조직 협업', f: 3 },
+    { n: '제작 요청서 작성', f: 2 },
+    { n: '피드백 정리', f: 3 },
+    { n: '결과 리포트 공유', f: 3 },
   ]},
 ];
 
 const VALUES = [
-  { n: '01', t: '고객의 맥락을 먼저 본다.', d: '쿼리보다 사람을 먼저 떠올립니다. 누가, 어떤 상태에서, 왜 지금 이 메시지를 받게 되는지를 답한 다음에야 카피를 씁니다.' },
-  { n: '02', t: '많이 보내지 않는다, 제때 보낸다.', d: '발송량이 아니라 도착의 의미를 셉니다. 한 번 더 보내는 것보다, 한 번을 더 잘 보내는 데 시간을 씁니다.' },
-  { n: '03', t: '감이 아니라 데이터와 맥락으로 판단한다.', d: '"느낌"은 가설일 뿐, 결론은 숫자로 닫습니다. 단 숫자는 항상 control과 함께 봅니다.' },
-  { n: '04', t: '한 번의 캠페인을 다음의 출발선으로.', d: '실행 → 기록 → 분석 → 개선의 루틴을 사람의 의지가 아닌 산출물로 강제합니다. 모든 캠페인은 라이브러리에 한 줄을 남기고 끝납니다.' },
+  {
+    n: '01',
+    t: '고객의 맥락을 먼저 봅니다.',
+    d: '누가, 어떤 상황에서, 왜 이 메시지를 받아야 하는지 먼저 정의합니다. 쿠폰보다 사람을 먼저 떠올리고, 메시지를 받는 순간의 고객 상태를 생각합니다.',
+  },
+  {
+    n: '02',
+    t: '브랜드의 말투를 지킵니다.',
+    d: '혜택을 강조하되 브랜드 이미지와 고객층에 맞는 표현을 선택합니다. 같은 할인 메시지도 브랜드의 색상, 상품군, 연령층, 주 고객층에 따라 다르게 설계합니다.',
+  },
+  {
+    n: '03',
+    t: '성과로 판단합니다.',
+    d: '문구, 타겟, 발송 시간별 반응을 비교하고 다음 캠페인에 반영합니다. 느낌상 좋다에서 끝내지 않고 CTR, CVR, GMV 등 성과 지표로 다시 확인합니다.',
+  },
+  {
+    n: '04',
+    t: '한 번의 캠페인을 다음 자산으로 남깁니다.',
+    d: '발송 후 리포트와 인사이트를 정리해 반복 가능한 운영 기준으로 만듭니다. 잘된 메시지의 패턴과 아쉬웠던 지점을 다음 캠페인의 출발선으로 옮깁니다.',
+  },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// i18n strings (Phase 1: nav-level + banner only; body copy will be localized in next session)
 const I18N = {
   contactCta:    { ko: '연락하기 →', en: 'Contact →' },
   langToggleAria:{ ko: '언어 변경', en: 'Switch language' },
@@ -238,14 +400,10 @@ const I18N = {
   enBannerCta:   { en: 'Switch back to Korean' },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Profile Q&A — interactive self-introduction (not a chatbot)
-// 7 questions covering personality, work, method, collab, intent, contact.
-// Answers are 3–5 lines max. Optional `jump` link routes to a portfolio section.
 const CHATBOT_QA = {
   ui: {
     panelTitle:    { ko: '정수정에게 묻기',         en: 'Ask Sujeong' },
-    panelSubtitle: { ko: 'CRM Marketer · 5 years',  en: 'CRM Marketer · 5 years' },
+    panelSubtitle: { ko: 'CRM Marketer',           en: 'CRM Marketer' },
     bubble:        { ko: '궁금한 점이 있나요?',      en: 'Curious about my work?' },
     greeting:      { ko: '안녕하세요. 아래 질문 중 궁금한 걸 골라보세요.', en: 'Hi — pick a question below and I’ll answer.' },
     closeAria:     { ko: '닫기',                    en: 'Close' },
@@ -256,61 +414,71 @@ const CHATBOT_QA = {
       id: 'q1',
       q: { ko: '어떤 CRM 마케터인가요?', en: 'What kind of CRM marketer are you?' },
       a: {
-        ko: '5년차 CRM 마케터입니다. 알림톡·이메일·푸시 채널로 142+ 캠페인을 보내왔어요.\n\nCRM을 ‘발송 업무’가 아니라 ‘고객 경험 설계’라고 믿습니다. 같은 메시지도 누구에게, 언제, 어떤 문장으로 도착하느냐에 따라 의미가 완전히 달라지니까요.',
-        en: 'I’m a CRM marketer with 5 years of experience — 142+ campaigns shipped across KakaoTalk, email, and push.\n\nI treat CRM as customer-experience design, not message dispatch. The same coupon means something different depending on who receives it, when, and in what voice.',
+        ko: '저는 메시지를 단순히 발송하는 것이 아니라, 고객의 상황과 브랜드의 말투, 캠페인의 목표를 함께 보고 설계하는 CRM 마케터입니다.\n\nApp Push, 카카오톡 플러스친구, LMS, DM Email을 운영하며 CTR, CVR, GMV 등 성과 지표를 확인하고 다음 캠페인에 반영하는 방식으로 일해왔습니다.',
+        en: 'I design CRM campaigns by connecting customer context, brand tone, segments, messages, and performance data.\n\nMy work covers copy planning, setup, QA, and reporting across App Push, KakaoTalk Plus Friend, LMS, and DM Email.',
       },
       jump: { id: 'about', label: { ko: 'About 섹션에서 더 보기', en: 'See full About' } },
     },
     {
       id: 'q2',
-      q: { ko: '가장 자신 있는 프로젝트는?', en: 'What project best represents your work?' },
+      q: { ko: '가장 자신 있는 CRM 채널은 무엇인가요?', en: 'Which CRM channel are you most confident in?' },
       a: {
-        ko: 'VIP 12,400명을 대상으로 9개월 동안 운영한 1:1 큐레이션 프로그램입니다.\n\n‘팔지 않는 메시지’가 가장 잘 팔린다는 걸 배운 작업이었어요. 12개월 잔존 +22%, 회신율 6.4% (업계 평균 1~2%). VIP에게 필요한 건 혜택 알림이 아니라 취향을 정리해주는 사람이었습니다.',
-        en: 'A 9-month VIP program for 12,400 high-tier customers — quarterly 1:1 curation messages.\n\nI learned that messages that don’t sell sell the best. 12-month retention +22%, reply rate 6.4% (industry CRM avg: 1–2%). VIPs didn’t need promo alerts — they needed someone to organize their taste.',
+        ko: '앱푸시와 카카오톡 플러스친구 운영 경험이 가장 많습니다. 짧은 문장 안에서 고객이 지금 확인해야 하는 이유를 설계하고, 브랜드별 톤앤매너에 맞춰 제목, 본문, CTA 구조를 다르게 구성하는 일을 해왔습니다.',
+        en: 'KakaoTalk Plus Friend and App Push. I’m used to balancing brand tone, benefit, and CTA in short copy, then reading CTR, CVR, and GMV after send.',
       },
       jump: { id: 'work', label: { ko: 'Featured Work에서 보기', en: 'See Featured Work' } },
     },
     {
       id: 'q3',
-      q: { ko: '세그먼트는 어떻게 설계하나요?', en: 'How do you approach segmentation?' },
+      q: { ko: '캠페인을 기획할 때 무엇을 먼저 보나요?', en: 'What do you check first when planning a campaign?' },
       a: {
-        ko: 'RFM만으로는 부족하다고 봐요. 행동 이벤트 × 라이프사이클 단계 × LTV 구간을 SQL로 조합합니다.\n\n세그먼트는 ‘리스트’가 아니라 ‘가설’이라고 생각해요. 그래서 모든 세그먼트는 control 그룹과 종료 규칙을 함께 정의합니다.',
-        en: 'RFM alone isn’t enough. I write SQL segments around behavioral events × lifecycle stage × LTV tier.\n\nA segment is a hypothesis, not a list. So every segment ships with a control group and an exit rule baked in.',
+        ko: '먼저 캠페인의 목적과 고객 맥락을 봅니다. 누구에게 보내는 메시지인지, 고객이 어떤 상황에서 메시지를 받는지, 어떤 행동을 기대하는지 확인한 뒤 문구와 CTA를 설계합니다.',
+        en: 'I first define who receives the message, in what situation, and why. Then I check brand tone, product context, benefit structure, landing flow, and KPIs together.',
       },
       jump: { id: 'approach', label: { ko: 'Approach에서 자세히', en: 'See method in Approach' } },
     },
     {
       id: 'q4',
-      q: { ko: '캠페인 성과는 어떻게 판단하나요?', en: 'How do you measure campaign success?' },
+      q: { ko: '브랜드별 메시지는 어떻게 다르게 설계하나요?', en: 'How do you adapt messages by brand?' },
       a: {
-        ko: '24h / 7d 두 시점에서 Open · CTR · CVR · Unsub을 봅니다. 그리고 항상 control과 함께 봐요.\n\n맥락 없는 숫자는 소음이라고 생각해요. 결과는 항상 Win Pattern Library에 정리해서 다음 캠페인의 입력값으로 만듭니다.',
-        en: 'I read every campaign at 24h and 7d — Open · CTR · CVR · Unsubscribe — always against a control group.\n\nNumbers without context are noise. Results land in a Win Pattern Library that becomes the input for the next campaign.',
+        ko: '상품 카테고리, 주 고객층, 브랜드 이미지, 혜택의 성격을 함께 봅니다. 같은 할인 메시지라도 생필품, 식품, 뷰티, 가전 등 카테고리에 따라 강조해야 할 포인트와 말투가 달라진다고 생각합니다.',
+        en: 'The same benefit reads differently by brand image and audience. I adjust title, body, and CTA by product strength, expected tone, and the right level of urgency.',
+      },
+      jump: { id: 'work', label: { ko: '브랜드별 케이스 보기', en: 'See brand cases' } },
+    },
+    {
+      id: 'q5',
+      q: { ko: '성과가 낮았던 캠페인은 어떻게 개선하나요?', en: 'How do you improve weak campaigns?' },
+      a: {
+        ko: 'CTR, CVR, GMV, 도달률, 바이어 수 등 지표를 확인하고 문구, 발송 시간, 세그먼트, CTA 중 어떤 요소가 영향을 줬는지 나눠서 봅니다. 이후 비슷한 캠페인에서 메시지 구조나 타겟 조건을 조정해 다시 테스트합니다.',
+        en: 'I separate send time, targeting, copy, landing, and benefit expression. Low CTR points me to hook and CTA; low CVR makes me inspect landing and product context.',
       },
       jump: { id: 'approach', label: { ko: 'Approach에서 자세히', en: 'See more in Approach' } },
     },
     {
-      id: 'q5',
-      q: { ko: '협업할 때 어떤 스타일인가요?', en: 'What is your collaboration style?' },
+      id: 'q6',
+      q: { ko: '콘텐츠/인플루언서 경험은 CRM과 어떻게 연결되나요?', en: 'How does content experience connect to CRM?' },
       a: {
-        ko: '카피를 쓰기 전에 1-pager(문제·세그먼트·가설·KPI)를 먼저 공유합니다.\n\n메시지 한 줄 뒤에는 디자인, 개발, CS, 영업이 다 따라오니까요. 컨펌 라운드를 줄이는 가장 빠른 길은 카피가 아니라 ‘맥락을 먼저 정렬하는 것’이라고 믿어요.',
-        en: 'I share a 1-pager (problem · segment · hypothesis · KPI) before any copy is written.\n\nDesign, dev, CS, and sales all need to align before a single message ships. Front-loading context is the fastest way to cut down confirmation rounds.',
+        ko: '블로그와 인플루언서 활동을 통해 소비자가 어떤 제목에 반응하고, 어떤 이미지와 구조에서 오래 머무는지 직접 경험했습니다. 이 경험은 CRM 메시지에서도 고객의 클릭 이유와 행동 흐름을 설계하는 데 도움이 됩니다.',
+        en: 'SEO and review content trained me to notice what language customers respond to. That helps me connect product benefits with customer language in CRM copy.',
       },
+      jump: { id: 'career', label: { ko: 'Career에서 보기', en: 'See Career' } },
     },
     {
-      id: 'q6',
-      q: { ko: '지금 어떤 기회를 찾고 있나요?', en: 'What opportunities are you looking for?' },
+      id: 'q7',
+      q: { ko: '협업할 때 어떤 방식으로 일하나요?', en: 'How do you collaborate?' },
       a: {
-        ko: 'CRM을 ‘한 번 보내는 일’이 아니라 ‘시스템’으로 운영하는 팀을 찾고 있어요.\n\n시퀀스를 설계할 라이프사이클 단계가 있고, 세그먼트를 쿼리할 데이터가 있고, 결과를 실험으로 닫는 분위기가 있는 곳이면 좋겠습니다. 작은 팀의 첫 CRM이든, 큰 조직의 새 채널 셋업이든 환영합니다.',
-        en: 'Teams running CRM as a system, not as one-off sends.\n\nA lifecycle worth designing for, queryable data, and a culture that closes results with experiments. Whether it’s a small team’s first CRM build or a larger org’s new channel — I’m in.',
+        ko: '요청사항을 그대로 전달하기보다 캠페인 목적, 일정, 수정 포인트, 의사결정 기준을 정리해 공유하려고 합니다. 광고주, 대행사, 영업 조직이 각자 중요하게 보는 지점이 다르기 때문에 공통 목표를 먼저 맞추고 커뮤니케이션합니다.',
+        en: 'I align schedule, assets, copy, and performance criteria with advertisers, agencies, and sales teams. Before send I use QA checklists; after send I summarize the next action through reporting.',
       },
       jump: { id: 'contact', label: { ko: 'Contact로 이동', en: 'Jump to Contact' } },
     },
     {
-      id: 'q7',
+      id: 'q8',
       q: { ko: '연락하려면 어떻게 하나요?', en: 'How can I contact you?' },
       a: {
-        ko: '이메일이 가장 빠릅니다 → sujeong.jeong@example.com\n\n24시간 내 회신 드려요. LinkedIn / Brunch / Notion Resume도 페이지 하단 Contact 섹션에 있습니다.',
-        en: 'Email is fastest → sujeong.jeong@example.com\n\nReply within 24h. LinkedIn / Brunch / Notion Resume are all in the Contact section at the bottom of the page.',
+        ko: '아래 이메일 또는 네이버 인플루언서 링크를 통해 연락하실 수 있습니다.\n\nclearlcrystal@gmail.com',
+        en: 'You can contact me through the email or Naver Influencer link below.\n\nclearlcrystal@gmail.com',
       },
       jump: { id: 'contact', label: { ko: 'Contact로 이동', en: 'Jump to Contact' } },
     },
@@ -326,7 +494,7 @@ function useInView(threshold = 0.2) {
     if (!ref.current || seen) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } });
-    }, { threshold, root: ref.current.closest('[data-scroll-root]') || null });
+    }, { threshold, root: null });
     io.observe(ref.current);
     return () => io.disconnect();
   }, [threshold, seen]);
@@ -342,7 +510,6 @@ function CountUp({ to, suffix = '', duration = 1400, prefix = '' }) {
     let raf;
     const tick = (t) => {
       const p = Math.min(1, (t - start) / duration);
-      // easeOutCubic
       const eased = 1 - Math.pow(1 - p, 3);
       setN(Math.round(to * eased));
       if (p < 1) raf = requestAnimationFrame(tick);
@@ -361,7 +528,7 @@ function Reveal({ children, delay = 0, y = 14, as: Tag = 'div', style, ...rest }
       style={{
         ...style,
         transform: seen ? 'translateY(0)' : `translateY(${y}px)`,
-        opacity: seen ? 1 : 0,
+        opacity: 1,
         transition: `transform 700ms cubic-bezier(.2,.7,.2,1) ${delay}ms, opacity 700ms ease ${delay}ms`,
         willChange: 'transform, opacity',
       }}
@@ -392,7 +559,7 @@ function PhotoSlot({ ratio = '4 / 5', label = 'Portrait — 인물 사진', radi
   );
 }
 
-window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER, I18N, CHATBOT_QA };
+window.PORTFOLIO_DATA = { PERSON, HERO_COPY, ABOUT_PARAGRAPHS, SERVICES, PROJECTS, ROUTINE, SKILLS, VALUES, CAREER, EDUCATION, I18N, CHATBOT_QA };
 window.useInView = useInView;
 window.CountUp = CountUp;
 window.Reveal = Reveal;
