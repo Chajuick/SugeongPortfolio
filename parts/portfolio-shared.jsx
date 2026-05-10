@@ -223,7 +223,7 @@ const PROJECTS = [
   },
   {
     id: 'p3',
-    image: 'assets/03_insight.png',
+    image: 'assets/03_insights.png',
     cat: 'Performance · Insight',
     period: 'Gmarket · 2025 — 현재',
     role: '발송 후 CTR, CVR, GMV 등 성과를 추적하고 캠페인별 반응 차이를 다음 운영 기준으로 정리했습니다.',
@@ -530,7 +530,7 @@ const EN = {
     },
     {
       id: 'p3',
-      image: 'assets/03_insight.png',
+      image: 'assets/03_insights.png',
       cat: 'Performance · Insight',
       period: 'Gmarket · 2025 — Present',
       role: 'Tracked CTR, CVR, GMV, and campaign response patterns, then translated results into operational learnings.',
