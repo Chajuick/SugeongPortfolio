@@ -1,0 +1,16 @@
+{
+  "name": "sugeong-portfolio",
+  "version": "1.0.0",
+  "description": "CRM Marketer Portfolio - 정수정",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "preview": "npx serve ."
+  },
+  "keywords": ["portfolio", "crm", "marketer"],
+  "author": "정수정 (Sujeong Jeong)",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
