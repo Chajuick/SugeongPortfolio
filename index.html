@@ -267,10 +267,8 @@
       .render(<PortfolioWarm palette="ivoryCoral" />);
   </script>
 
-  <!-- Vercel Web Analytics (static site) -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Web Analytics - configured using @vercel/analytics package -->
+  <!-- Documentation: https://vercel.com/docs/analytics/quickstart -->
+  <script src="parts/analytics.js"></script>
 </body>
 </html>
