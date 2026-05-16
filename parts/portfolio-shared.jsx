@@ -136,7 +136,7 @@ const HERO_COPY = {
   stats: [
     { text: '4', unit: 'Channels', label: 'CRM 운영 채널', sub: 'App Push · KakaoTalk · LMS · DM Email' },
     { text: '150만+', unit: 'App Push', label: '단일 캠페인 발송 규모', sub: '대규모 타겟 세팅 · QA · 발송 후 리포트 확인' },
-    { text: '3+', unit: 'KPI', label: '주요 성과 관리 지표', sub: 'CTR · CVR · GMV · 도달률 · 바이어' },
+    { text: '3+', unit: 'KPI', label: '주요 성과 관리 지표', sub: 'CTR · CVR · GMV · ROAS · 도달률 · 바이어' },
     { text: '1,000+', unit: 'Contents', label: '네이버 인플루언서 콘텐츠 경험', sub: '팬 4,843 · 이웃 5,150 · SEO 콘텐츠 제작' },
   ],
 };
@@ -418,7 +418,7 @@ const EN = {
     stats: [
       { text: '4', unit: 'Channels', label: 'CRM channels operated', sub: 'App Push · KakaoTalk · LMS · DM Email' },
       { text: '1.5M+', unit: 'App Push', label: 'single-campaign send scale', sub: 'Large-audience setup · QA · post-send reporting' },
-      { text: '3+', unit: 'KPI', label: 'core performance metrics', sub: 'CTR · CVR · GMV · Reach · Buyers' },
+      { text: '3+', unit: 'KPI', label: 'core performance metrics', sub: 'CTR · CVR · GMV · ROAS · Reach · Buyers' },
       { text: '1,000+', unit: 'Contents', label: 'SEO/content marketing experience', sub: 'Naver Influencer · 4,843 fans · 5,150 neighbors' },
     ],
   },
