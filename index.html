@@ -272,5 +272,25 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- 방문 알림 beacon (디스코드 웹훅으로 접속 정보 전송) -->
+  <script>
+    (function () {
+      try {
+        var qs = new URLSearchParams({
+          p: location.pathname || '/',
+          ref: document.referrer || '',
+          l: navigator.language || ''
+        });
+        var url = '/api/hit?' + qs.toString();
+        // sendBeacon: 페이지 이탈에도 전송 보장 (실패 시 fetch로 폴백)
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(url);
+        } else {
+          fetch(url, { method: 'POST', keepalive: true });
+        }
+      } catch (e) { /* 방문자 경험엔 영향 없음 */ }
+    })();
+  </script>
 </body>
 </html>
