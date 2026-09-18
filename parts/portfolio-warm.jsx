@@ -947,7 +947,7 @@ function CaseCard({ c, project, index, isMobile }) {
               {project.cat} · 0{index+1}
             </span>
             <span style={{fontSize: 11.5, color: c.faint, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: '0.04em', whiteSpace: 'nowrap'}}>
-              {project.period.replace(/ · 2025 — (현재|Present)/, '')}
+              {project.period.replace(/ · 2025 — (현재|Present|2026)/, '')}
             </span>
           </div>
           <h3 style={{fontSize: isMobile ? 19 : 22, fontWeight: 700, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.32}}>

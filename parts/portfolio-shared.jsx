@@ -10,7 +10,7 @@ const PERSON = {
 
 const CAREER = [
   {
-    period: '2025.06 — 현재',
+    period: '2025.06 — 2026.06',
     company: '㈜지마켓',
     role: 'CRM 마케터',
     meta: {
@@ -159,7 +159,7 @@ const PROJECTS = [
     id: 'p1',
     image: 'assets/01_brand_crm.png',
     cat: 'Brand CRM · Targeting',
-    period: 'Gmarket · 2025 — 현재',
+    period: 'Gmarket · 2025 — 2026',
     role: '동일 모수 기준 매출 2배를 확인한 타겟 전환 제안 — 남성 중심에서 여성 35~59세로 메시지 방향을 바꿨습니다.',
     title: '정수기 브랜드 타겟 전환 CRM 메시지 개선',
     problem: '기존 남성 중심 타겟과 푸른색 배너 톤을 재검토하고, 실제 구매 가능성이 높은 여성 타겟 중심으로 메시지 방향을 바꿨습니다.',
@@ -192,7 +192,7 @@ const PROJECTS = [
     id: 'p2',
     image: 'assets/02_promotion.png',
     cat: 'Big Promotion · App Push',
-    period: 'Gmarket · 2025 — 현재',
+    period: 'Gmarket · 2025 — 2026',
     role: '빅스마일데이 등 대형 프로모션에서 앱푸시 발송 세팅, 타겟 조건, 발송 시간, QA를 관리했습니다.',
     title: '빅스마일데이 CRM 발송 운영',
     problem: '대형 프로모션은 발송 규모와 일정 변수가 큽니다. 타겟, 링크, 랜딩, 파라미터를 사전에 맞춰 발송 품질을 관리했습니다.',
@@ -225,7 +225,7 @@ const PROJECTS = [
     id: 'p3',
     image: 'assets/03_insights.png',
     cat: 'Performance · Insight',
-    period: 'Gmarket · 2025 — 현재',
+    period: 'Gmarket · 2025 — 2026',
     role: '발송 후 CTR, CVR, GMV 등 성과를 추적하고 캠페인별 반응 차이를 다음 운영 기준으로 정리했습니다.',
     title: 'CRM 캠페인 실적 추적 및 관리',
     problem: '캠페인은 발송 후 지표를 확인해야 다음 메시지의 기준이 생깁니다. 채널, 타겟 방식, 메시지 구조별 반응을 비교해 개선 포인트를 정리했습니다.',
@@ -466,7 +466,7 @@ const EN = {
       id: 'p1',
       image: 'assets/01_brand_crm.png',
       cat: 'Brand CRM · Targeting',
-      period: 'Gmarket · 2025 — Present',
+      period: 'Gmarket · 2025 — 2026',
       role: 'Doubled sales on the same audience base by shifting CRM creative from male-oriented to women aged 35-59.',
       title: 'Repositioning CRM messaging through audience targeting',
       problem: 'The existing creative leaned on a blue, male-oriented tone. I reframed the audience and message direction around customers with higher purchase intent.',
@@ -499,7 +499,7 @@ const EN = {
       id: 'p2',
       image: 'assets/02_promotion.png',
       cat: 'Big Promotion · App Push',
-      period: 'Gmarket · 2025 — Present',
+      period: 'Gmarket · 2025 — 2026',
       role: 'For Big Smile Day (Gmarket’s flagship sitewide promotion): app push setup, targeting, QA, and post-send reporting at 1.5M+ scale.',
       title: 'Big Smile Day CRM send operations',
       problem: 'Large promotions involve high send volume and fast-changing schedules. I kept targeting, links, landing pages, parameters, and send timing aligned before each launch.',
@@ -532,7 +532,7 @@ const EN = {
       id: 'p3',
       image: 'assets/03_insights.png',
       cat: 'Performance · Insight',
-      period: 'Gmarket · 2025 — Present',
+      period: 'Gmarket · 2025 — 2026',
       role: 'Tracked CTR, CVR, GMV, and campaign response patterns, then translated results into operational learnings.',
       title: 'CRM performance tracking and reporting',
       problem: 'A campaign isn’t finished until its results are read. I compared responses by channel, audience logic, and message structure to identify the next improvement point.',
@@ -597,7 +597,7 @@ const EN = {
   ],
   CAREER: [
     {
-      period: 'Jun 2025 — Present',
+      period: 'Jun 2025 — Jun 2026',
       company: 'Gmarket',
       role: 'CRM Marketer',
       meta: {
